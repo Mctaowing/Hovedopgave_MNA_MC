@@ -419,5 +419,5 @@ script = ExtResource("1_3xaeu")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(68, 38)
 sprite_frames = SubResource("SpriteFrames_ulxob")
-animation = &"Walk_sideways"
+animation = &"Idle_forward"
 autoplay = "Idle_forward"

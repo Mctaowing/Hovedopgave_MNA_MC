@@ -18,5 +18,7 @@ func _process(delta: float) -> void:
 func attack():
 	if Input.is_action_just_pressed("attack") == true:
 		animated_sprite_2d.play("Attack_forward")
+	elif Input.is_action_just_pressed("die") == true:
+		animated_sprite_2d.play("Death")
 	elif animated_sprite_2d.is_playing() == false:
 		animated_sprite_2d.play("Idle_forward")
