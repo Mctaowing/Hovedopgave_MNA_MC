@@ -11,13 +11,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	attack()
+	get_input()
+	move_and_slide()
+	updateDirection()
+	updateAnimation()
 
-func attack():
-	if Input.is_action_just_pressed("attack") == true:
-		animated_sprite_2d.play("Attack_forward")
-	elif Input.is_action_just_pressed("die") == true:
-		animated_sprite_2d.play("Death")
 
 func updateDirection():
 	if velocity.x < 0: 
@@ -44,7 +42,4 @@ func get_input():
 	velocity = input_direction * speed
 	
 func _physics_process(delta: float) -> void:
-	get_input()
-	move_and_slide()
-	updateDirection()
-	updateAnimation()
+	pass
