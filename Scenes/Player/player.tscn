@@ -35,21 +35,21 @@ region = Rect2(96, 288, 48, 48)
 atlas = ExtResource("1_u8yn6")
 region = Rect2(144, 288, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ankd2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_evdcn"]
 atlas = ExtResource("1_u8yn6")
-region = Rect2(0, 336, 48, 48)
+region = Rect2(0, 337, 48, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t175c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8pyv"]
 atlas = ExtResource("1_u8yn6")
-region = Rect2(48, 336, 48, 48)
+region = Rect2(48, 337, 48, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aq621"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q74fm"]
 atlas = ExtResource("1_u8yn6")
-region = Rect2(96, 336, 48, 48)
+region = Rect2(96, 337, 48, 47)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jai83"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_meyfm"]
 atlas = ExtResource("1_u8yn6")
-region = Rect2(144, 336, 48, 48)
+region = Rect2(144, 337, 48, 47)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3w5um"]
 atlas = ExtResource("1_u8yn6")
@@ -224,7 +224,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack_backward",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -245,16 +245,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ankd2")
+"texture": SubResource("AtlasTexture_evdcn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t175c")
+"texture": SubResource("AtlasTexture_b8pyv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aq621")
+"texture": SubResource("AtlasTexture_q74fm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jai83")
+"texture": SubResource("AtlasTexture_meyfm")
 }],
 "loop": false,
 "name": &"Attack_sideway",
@@ -421,7 +421,7 @@ script = ExtResource("1_3xaeu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ulxob")
-animation = &"Idle_sideway"
+animation = &"Attack_sideway"
 autoplay = "Idle_forward"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
