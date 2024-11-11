@@ -427,3 +427,6 @@ autoplay = "Idle_forward"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 14)
 shape = SubResource("RectangleShape2D_vrbaq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
