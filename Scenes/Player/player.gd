@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+@onready var character_body_2d: CharacterBody2D = $"."
+
 @export var speed = 200
-var direction
+@export var coordinates = position
+var direction = "forward"
 var health
 var damage
 
@@ -13,11 +16,12 @@ func _ready() -> void:
 	damage = 20
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	updateDirection()
 	updateAnimation()
+	coordinates = character_body_2d.position
 
 func updateDirection():
 	if velocity.x < 0: 
