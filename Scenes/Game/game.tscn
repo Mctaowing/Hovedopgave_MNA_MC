@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://85ytluqmdxr7" path="res://Scenes/Orc1/orc1.tscn" id="3_efesj"]
 
 [node name="Game" type="Node2D"]
-position = Vector2(0, 1)
+position = Vector2(-10, 0)
 
 [node name="Town" parent="." instance=ExtResource("1_1g55h")]
 
 [node name="Player" parent="." instance=ExtResource("2_57ogm")]
-position = Vector2(337, 264)
+position = Vector2(549, 557)
 
 [node name="Orc" parent="." instance=ExtResource("3_efesj")]
-position = Vector2(507, 296)
+position = Vector2(180, 429)
