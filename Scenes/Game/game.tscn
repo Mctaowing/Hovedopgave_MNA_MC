@@ -13,4 +13,4 @@ position = Vector2(-10, 0)
 position = Vector2(549, 557)
 
 [node name="Orc" parent="." instance=ExtResource("3_efesj")]
-position = Vector2(180, 429)
+position = Vector2(868, 475)
