@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://85ytluqmdxr7"]
+[gd_scene load_steps=107 format=3 uid="uid://85ytluqmdxr7"]
 
 [ext_resource type="Texture2D" uid="uid://cbsmsvk8ucrs6" path="res://Assets/Topdown orc/PNG/Orc1/Orc1_idle/orc1_idle_full.png" id="1_qvqxc"]
 [ext_resource type="Script" path="res://Scenes/Orc1/orc_1.gd" id="1_r825v"]
@@ -764,6 +764,9 @@ size = Vector2(17, 8)
 radius = 74.0065
 height = 194.013
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_sr2j8"]
+radius = 21.0
+
 [node name="Orc" type="CharacterBody2D"]
 script = ExtResource("1_r825v")
 
@@ -782,6 +785,11 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 rotation = -1.56734
 shape = SubResource("CapsuleShape2D_erfks")
+
+[node name="Enemy_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_hitbox"]
+shape = SubResource("CircleShape2D_sr2j8")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
