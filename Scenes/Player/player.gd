@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 		player_alive = false ##Can add end screen or game over screen etc.
 		health = 0
 		print("player has been killed")
-		animated_sprite_2d.play("Death")
+		self.queue_free()
 
 func updateDirection():
 	if velocity.x < 0: 

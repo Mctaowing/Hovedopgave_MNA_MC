@@ -8,6 +8,7 @@ var health = 100
 var speed = 100
 var player = null
 var player_chase = false
+var player_in_attack_zone = false
 
 @export var coordinates = position
 
@@ -53,3 +54,16 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 func enemy():
 	pass
+
+func _on_enemy_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_in_attack_zone = true
+
+func _on_enemy_hitbox_body_exited(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_in_attack_zone = false
+
+func deal_with_damage():
+	if player_in_attack_zone and global.player_current_attack == true:
+		health = health - 20
+		
