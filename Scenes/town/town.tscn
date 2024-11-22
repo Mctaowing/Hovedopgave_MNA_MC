@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://defja4qrub5l" path="res://Assets/Mystic woods/fences.png" id="4_2aski"]
 [ext_resource type="TileSet" uid="uid://6icktqxb1ak3" path="res://Hill.tres" id="4_dmpit"]
 [ext_resource type="Texture2D" uid="uid://houwqbfvty0f" path="res://Assets/Pixel lands/ground_demo.png" id="4_rt4fa"]
-[ext_resource type="TileSet" uid="uid://dgk5kevdie0uy" path="res://Scenes/Town/Objects.tres" id="10_2k7qg"]
+[ext_resource type="TileSet" uid="uid://dgk5kevdie0uy" path="res://Scenes/town/Objects.tres" id="10_2k7qg"]
 [ext_resource type="Texture2D" uid="uid://d1nptqej16nbb" path="res://Assets/Village top down/Edits/House_Doors.png" id="10_8rdxy"]
 [ext_resource type="Texture2D" uid="uid://vbgfpbegdhc1" path="res://Assets/Village top down/Edits/Border_Colours.png" id="11_7rhbt"]
 [ext_resource type="Texture2D" uid="uid://dgoqpvmd3lf67" path="res://Assets/Village top down/Edits/Small_House.png" id="12_nkpev"]

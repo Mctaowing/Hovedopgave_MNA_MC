@@ -9,6 +9,7 @@ var speed = 100
 var player = null
 var player_chase = false
 var player_in_attack_zone = false
+var can_take_damage = true
 
 @export var coordinates = position
 
@@ -22,6 +23,7 @@ func _process(_delta: float) -> void:
 	updateDirection()
 	updateAnimation()
 	chasePlayer()
+	deal_with_damage()
 
 func updateDirection():
 	if abs(velocity.x) > abs(velocity.y):
@@ -65,5 +67,14 @@ func _on_enemy_hitbox_body_exited(body: Node2D) -> void:
 
 func deal_with_damage():
 	if player_in_attack_zone and global.player_current_attack == true:
-		health = health - 20
-		
+		if can_take_damage == true:
+			health = health - 20
+			$Take_damage_cooldown.start()
+			can_take_damage = false
+			print("enemy health = ", health)
+			if health <= 0:
+				self.queue_free()
+
+
+func _on_take_damage_cooldown_timeout() -> void:
+	can_take_damage = true

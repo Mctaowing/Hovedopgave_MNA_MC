@@ -11,7 +11,7 @@ var damage
 var enemy_in_attack_range = false
 var enemy_attack_cooldown = true
 var player_alive = true
-
+var attack_in_progress = false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -53,7 +53,10 @@ func updateAnimation():
 	elif velocity.length() > 0:
 		animated_sprite_2d.play("Walk_" + direction)
 	elif Input.is_action_just_pressed("attack") == true:
+		global.player_current_attack = true
+		attack_in_progress = true
 		animated_sprite_2d.play("Attack_" + direction)
+		$Player_attack_cooldown.start()
 
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -79,6 +82,11 @@ func enemy_attack():
 func player():
 	pass
 
-
 func _on_attack_cooldown_timeout() -> void:
 	enemy_attack_cooldown = true
+
+
+func _on_player_attack_cooldown_timeout() -> void:
+	$Player_attack_cooldown.stop()
+	global.player_current_attack = false
+	attack_in_progress = false
