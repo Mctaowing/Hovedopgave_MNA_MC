@@ -419,7 +419,7 @@ size = Vector2(11, 4)
 [sub_resource type="CircleShape2D" id="CircleShape2D_t6nn2"]
 radius = 13.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_layer = 3
 script = ExtResource("1_3xaeu")
