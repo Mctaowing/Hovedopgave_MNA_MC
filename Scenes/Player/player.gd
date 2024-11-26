@@ -1,6 +1,8 @@
+class_name Player
 extends CharacterBody2D
 
 @onready var character_body_2d: CharacterBody2D = $"."
+@onready var interaction_manager = InteractionManager
 
 @export var speed = 200
 @export var coordinates = position
@@ -28,6 +30,9 @@ func _process(_delta: float) -> void:
 	updateAnimation()
 	coordinates = character_body_2d.position
 	enemy_attack()
+	
+	#if Input.is_action_just_pressed("interact"):
+	#	interaction_manager.trigger_interaction()
 	
 	if health <= 0:
 		player_alive = false ##Can add end screen or game over screen etc.
