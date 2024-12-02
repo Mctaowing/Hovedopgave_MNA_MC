@@ -19,13 +19,13 @@ func _ready():
 	randomize()
 	initalize_grid()
 	generate_dungeon()
-	draw_dungeon()
+	_draw_dungeon()
 
 func initalize_grid():
 	for x in range(WIDTH):
 		grid.append([])
 		for y in range(HEIGHT):
-			grid[x].append(1) # 1 er en væg
+			grid[x].append(0) # 0 er en tom tile
 
 func generate_dungeon():
 	for i in range(MAX_ROOM):
@@ -45,15 +45,15 @@ func generate_room():
 func place_room(room):
 	for x in range(room.position.x, room.end.x):
 		for y in range(room.position.y, room.end.y):
-			if grid[x][y] == 0: # Gælder hvis tilen allerede er et gulv
+			if grid[x][y] == 1: # Gælder hvis tilen allerede er en dungeon tile
 				return false
 	
 	for x in range(room.position.x, room.end.x):
 		for y in range(room.position.y, room.end.y):
-			grid[x][y] = 0 # 0 betyder det er et gulv
+			grid[x][y] = 1 # 1 betyder det er en dungeon tile
 	return true
 
-func connect_rooms(room1, room2, corridor_width=3):
+func connect_rooms(room1, room2, corridor_width=5):
 	# Vælg startpunkt for room1
 	var start = Vector2(
 		int(room1.position.x + room1.size.x / 2),
@@ -71,18 +71,22 @@ func connect_rooms(room1, room2, corridor_width=3):
 	# Horisontal bevægelse
 	while current.x != end.x:
 		current.x += 1 if end.x > current.x else -1
+		@warning_ignore("integer_division")
 		for i in range(-int(corridor_width / 2), int(corridor_width / 2) + 1):
+			@warning_ignore("integer_division")
 			for j in range(-int(corridor_width / 2), int(corridor_width / 2) + 1):
 				if current.y + j >= 0 and current.y + j < HEIGHT and current.x + i >= 0 and current.x + i < WIDTH:
-					grid[current.x + i][current.y + j] = 0 # Repræsenterer gulv
+					grid[current.x + i][current.y + j] = 1 # Repræsenterer dungeon tile
 	
 	# Vertikal bevægelse
 	while current.y != end.y:
 		current.y += 1 if end.y > current.y else -1
+		@warning_ignore("integer_division")
 		for i in range(-int(corridor_width / 2), int(corridor_width / 2) + 1):
+			@warning_ignore("integer_division")
 			for j in range(-int(corridor_width / 2), int(corridor_width / 2) + 1):
 				if current.x + i >= 0 and current.x + i < WIDTH and current.y + j >= 0 and current.y + j < HEIGHT:
-					grid[current.x + i][current.y + j] = 0 # Repræsenterer gulv
+					grid[current.x + i][current.y + j] = 1 # Repræsenterer dungeon tile
 
 func draw_dungeon():
 	for x in range(WIDTH):
@@ -99,3 +103,20 @@ func draw_dungeon():
 					tile_map_layer.set_cell(tile_position, 1, Vector2i(-1, -1))
 			else:
 				tile_map_layer.set_cell(tile_position, 1, Vector2i(-1, -1))
+				
+func _draw_dungeon():
+	var wallArray = []
+	#var floorArray = []
+	for x in range(WIDTH):
+		for y in range(HEIGHT):
+			var tile_position = Vector2i(x,y)
+			if grid[x][y] == 1:
+				wallArray.append(tile_position)
+	# find en måde hvorpå vi kan bestemme hvilke dungeon tiles som er vægge og lav et array af deres coords.
+	# der skal være 2 tiles af vægge på toppen af rum og gange, men kun 1 væg tile på alle andre sider der af.
+			#elif grid[x][y] == 2:
+				#floorArray.append(tile_position)
+			
+	tile_map_layer.set_cells_terrain_connect(wallArray, 0, 0)		
+	#tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1)
+	
