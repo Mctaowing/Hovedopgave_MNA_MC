@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhoc1xi6um7qu"]
+
+[ext_resource type="Script" path="res://Scenes/Interaction/interaction_manager.gd" id="1_xpbxi"]
+[ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="2_51fg1"]
+
+[node name="InteractionManager" type="Node2D"]
+script = ExtResource("1_xpbxi")
+
+[node name="Label" type="Label" parent="."]
+z_index = 20
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_51fg1")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
