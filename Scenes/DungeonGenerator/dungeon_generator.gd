@@ -132,10 +132,9 @@ func draw_dungeon():
 				#tile_map_layer.set_cell(tile_position, 1, Vector2i(0,0))
 			elif grid[x][y] == 2:
 				floorArray.append(tile_position)
-				wallArray.append(tile_position)
 				dungeonTileArray.append(tile_position)
 				#tile_map_layer.set_cell(tile_position, 1, Vector2i(1, 0))
 				
-	tile_map_layer.set_cells_terrain_connect(wallArray, 0, 0, true)
+	tile_map_layer.set_cells_terrain_connect(dungeonTileArray, 0, 0, true)
 	tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1, true)
 	
