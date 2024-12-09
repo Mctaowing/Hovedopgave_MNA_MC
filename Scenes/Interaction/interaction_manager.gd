@@ -44,7 +44,7 @@ func sort_by_distance_to_player(area1, area2):
 
 func _input(event):
 	if event.is_action_pressed("interact") && can_interact:
-		if active_areas > 0:
+		if active_areas.size() > 0:
 			can_interact = false
 			label.hide()
 			
