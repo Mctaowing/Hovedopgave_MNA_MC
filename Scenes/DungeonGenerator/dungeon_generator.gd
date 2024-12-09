@@ -6,7 +6,7 @@ extends Node2D
 
 const WIDTH = 100
 const HEIGHT = 80
-const CELL_SIZE = 10
+const CELL_SIZE = 16
 const MIN_ROOM_SIZE = 10
 const MAX_ROOM_SIZE = 20
 const MAX_ROOM = 20
@@ -23,7 +23,8 @@ func _ready():
 	initalize_grid()
 	generate_dungeon()
 	draw_dungeon()
-	player.position = Vector2(rooms[0].position.x * 16 + 48, rooms[0].position.y * 16 + 64)
+	player.position = Vector2(rooms[0].position.x * CELL_SIZE + 48, rooms[0].position.y * CELL_SIZE + 64)
+	spawn_enemies_in_rooms()
 
 func initalize_grid():
 	for x in range(WIDTH):
@@ -140,18 +141,11 @@ func draw_dungeon():
 				
 	tile_map_layer.set_cells_terrain_connect(dungeonTileArray, 0, 0, true)
 	tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1, true)
-	
 
 func spawn_enemy(position):
 		var enemy = orc1
 		add_child(enemy)
 		enemy.position = position
-
-func get_room_center(room: Rect2) -> Vector2:
-	return Vector2(
-		room.position.x + room.size.x / 2,
-		room.position.y + room.size.x / 2
-	)
 
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
@@ -160,8 +154,15 @@ func spawn_enemies_in_rooms():
 		for j in range(enemy_count):
 			var enemy_position = get_random_position_in_room(room) * CELL_SIZE 
 			spawn_enemy(enemy_position)
+			print(i, ": ", enemy_position)
 
 func get_random_position_in_room(room) -> Vector2:
-	var x = room.position.x + randi() % int(room.size.x) * 16 + 32
-	var y = room.position.y + randi() % int(room.size.y) * 16 + 32
-	return Vector2(x,y)
+	var room_min_x = room.position.x +1
+	var room_min_y = room.position.y + 2
+	var room_max_x = room.size.x - 1
+	var room_max_y = room.size.y - 1
+	
+	var rand_x = randi_range(room_min_x, room_max_x)
+	var rand_y = randi_range(room_min_y, room_max_y)
+
+	return Vector2(rand_x,rand_y)
