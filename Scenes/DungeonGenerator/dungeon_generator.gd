@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var tile_map_layer = $TileMapLayer
 @onready var player = $CharacterBody2D
-@onready var orc1 = $Orc
+@onready var orc1 = preload("res://Scenes/Orc1/orc1.tscn")
 
 const WIDTH = 100
 const HEIGHT = 80
@@ -142,19 +142,17 @@ func draw_dungeon():
 	tile_map_layer.set_cells_terrain_connect(dungeonTileArray, 0, 0, true)
 	tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1, true)
 
-func spawn_enemy(position):
-		var enemy = orc1
-		add_child(enemy)
-		enemy.position = position
-
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
 		var enemy_count = randi_range(2, 5)
 		var room = rooms[i]
 		for j in range(enemy_count):
 			var enemy_position = get_random_position_in_room(room) * CELL_SIZE 
-			spawn_enemy(enemy_position)
-			print(i, ": ", enemy_position)
+			var new_enemy = orc1.instantiate()
+			new_enemy.position = enemy_position
+			new_enemy.name = "enemy_R" + str(i) + "_N" + str(j)
+			add_child(new_enemy)
+			print(new_enemy.name, " ", new_enemy.position)
 
 func get_random_position_in_room(room) -> Vector2:
 	var room_min_x = room.position.x +1
