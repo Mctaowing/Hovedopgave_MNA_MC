@@ -23,6 +23,7 @@ func _ready():
 	initalize_grid()
 	generate_dungeon()
 	draw_dungeon()
+	player.position = Vector2(rooms[0].position.x * 16 + 48, rooms[0].position.y * 16 + 64)
 
 func initalize_grid():
 	for x in range(WIDTH):
@@ -154,7 +155,7 @@ func get_room_center(room: Rect2) -> Vector2:
 
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
-		var enemy_count = randi() % 4 + 2 #Skaber random tal mellem 2-5
+		var enemy_count = randi_range(2, 5)
 		var room = rooms[i]
 		for j in range(enemy_count):
 			var enemy_position = get_random_position_in_room(room) * CELL_SIZE 
