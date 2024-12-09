@@ -143,9 +143,9 @@ func draw_dungeon():
 	tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1, true)
 
 func spawn_enemy(position):
-		var enemy = orc1
-		add_child(enemy)
-		enemy.position = position
+	var enemy = orc1
+	add_child(enemy)
+	enemy.position = position
 
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
@@ -154,7 +154,6 @@ func spawn_enemies_in_rooms():
 		for j in range(enemy_count):
 			var enemy_position = get_random_position_in_room(room) * CELL_SIZE 
 			spawn_enemy(enemy_position)
-			print(i, ": ", enemy_position)
 
 func get_random_position_in_room(room) -> Vector2:
 	var room_min_x = room.position.x +1
