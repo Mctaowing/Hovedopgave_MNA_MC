@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0g7yagh82ocj"]
+[gd_scene load_steps=4 format=3 uid="uid://d0g7yagh82ocj"]
 
 [ext_resource type="PackedScene" uid="uid://bkxwynltmwabf" path="res://Scenes/town/town.tscn" id="1_1g55h"]
 [ext_resource type="PackedScene" uid="uid://17awqu4fuiqo" path="res://Scenes/Player/player.tscn" id="2_57ogm"]
+[ext_resource type="PackedScene" uid="uid://c4urmgch5w82u" path="res://Scenes/Chest/chest.tscn" id="3_ufd2h"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -11,3 +12,6 @@ position = Vector2(-10, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_57ogm")]
 position = Vector2(569, 1072)
+
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("3_ufd2h")]
+position = Vector2(390, 857)
