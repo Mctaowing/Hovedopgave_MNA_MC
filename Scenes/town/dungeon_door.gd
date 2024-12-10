@@ -13,9 +13,9 @@ func _process(delta: float) -> void:
 
 func _on_interact():
 	global.transition_scene = true
-	change_scene()
+	_change_scene()
 
-func change_scene():
+func _change_scene():
 	if global.transition_scene == true:
 		if global.current_scene == "game":
 			get_tree().change_scene_to_file("res://Scenes/DungeonGenerator/dungeon_generator.tscn")
