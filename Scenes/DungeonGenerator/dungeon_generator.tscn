@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cvi6pcq5c6vo6" path="res://Assets/0x72_16x16DungeonTileset.v5/Edit.png" id="2_1ysb1"]
 [ext_resource type="Texture2D" uid="uid://vbgfpbegdhc1" path="res://Assets/Village top down/Edits/Border_Colours.png" id="3_bggwb"]
 [ext_resource type="PackedScene" uid="uid://17awqu4fuiqo" path="res://Scenes/Player/player.tscn" id="4_d35k6"]
-[ext_resource type="PackedScene" uid="uid://85ytluqmdxr7" path="res://Scenes/Orc1/orc1.tscn" id="5_vummr"]
+[ext_resource type="PackedScene" uid="uid://85ytluqmdxr7" path="res://Scenes/Being/Orc1/orc1.tscn" id="5_vummr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qdq6j"]
 texture = ExtResource("2_1ysb1")

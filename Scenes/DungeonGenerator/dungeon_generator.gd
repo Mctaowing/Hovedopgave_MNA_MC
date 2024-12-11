@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var tile_map_layer = $TileMapLayer
 @onready var player = $CharacterBody2D
-@onready var orc1 = preload("res://Scenes/Orc1/orc1.tscn")
+@onready var orc1 = preload("res://Scenes/Being/Orc1/orc1.tscn")
 
 const WIDTH = 100
 const HEIGHT = 80

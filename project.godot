@@ -23,6 +23,7 @@ InteractionManager="*res://Scenes/Interaction/interaction_manager.tscn"
 [global_group]
 
 player=""
+enemy=""
 
 [input]
 
