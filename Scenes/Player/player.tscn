@@ -462,7 +462,7 @@ vertical_alignment = 2
 wait_time = 0.5
 
 [node name="death" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.2
 one_shot = true
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_player_hitbox_body_entered"]
