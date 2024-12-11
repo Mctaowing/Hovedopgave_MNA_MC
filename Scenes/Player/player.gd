@@ -3,12 +3,14 @@ extends CharacterBody2D
 
 @onready var character_body_2d: CharacterBody2D = $"."
 @onready var interaction_manager = InteractionManager
+@onready var gold_display = $Camera2D/Gold
 
 @export var speed = 200
 @export var coordinates = position
 var direction = "forward"
 var health
 var damage
+var gold = 0
 
 var enemy_in_attack_range = false
 var enemy_attack_cooldown = true
@@ -21,7 +23,8 @@ var attack_in_progress = false
 func _ready() -> void:
 	health = 200
 	damage = 20
-
+	gold_display.text = "Gold: " + str(gold)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	get_input()
@@ -31,11 +34,8 @@ func _process(_delta: float) -> void:
 	coordinates = character_body_2d.position
 	enemy_attack()
 	
-	#if Input.is_action_just_pressed("interact"):
-	#	interaction_manager.trigger_interaction()
-	
 	if health <= 0:
-		player_alive = false ##Can add end screen or game over screen etc.
+		player_alive = false # Can add end screen or game over screen etc.
 		health = 0
 		print("player has been killed")
 		self.queue_free()
@@ -67,11 +67,9 @@ func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = input_direction * speed
 
-
 func _on_player_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		enemy_in_attack_range = true
-
 
 func _on_player_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
@@ -90,8 +88,11 @@ func player():
 func _on_attack_cooldown_timeout() -> void:
 	enemy_attack_cooldown = true
 
-
 func _on_player_attack_cooldown_timeout() -> void:
 	$Player_attack_cooldown.stop()
 	global.player_current_attack = false
 	attack_in_progress = false
+
+func update_gold(amount: int):
+	gold += amount
+	gold_display.text = "Gold: " + str(gold)

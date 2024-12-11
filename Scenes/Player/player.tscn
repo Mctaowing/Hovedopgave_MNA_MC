@@ -1,7 +1,8 @@
-[gd_scene load_steps=57 format=3 uid="uid://17awqu4fuiqo"]
+[gd_scene load_steps=58 format=3 uid="uid://17awqu4fuiqo"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_3xaeu"]
 [ext_resource type="Texture2D" uid="uid://mbdeqt2wb4m2" path="res://Assets/Mystic woods/player.png" id="1_u8yn6"]
+[ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="3_17yyk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hoawo"]
 atlas = ExtResource("1_u8yn6")
@@ -437,6 +438,16 @@ shape = SubResource("RectangleShape2D_vrbaq")
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -16)
 zoom = Vector2(3, 3)
+
+[node name="Gold" type="Label" parent="Camera2D"]
+z_index = 20
+offset_left = -192.0
+offset_top = 69.0
+offset_right = -152.0
+offset_bottom = 92.0
+theme_override_fonts/font = ExtResource("3_17yyk")
+theme_override_font_sizes/font_size = 10
+vertical_alignment = 2
 
 [node name="Player_Hitbox" type="Area2D" parent="."]
 position = Vector2(0, -16)
