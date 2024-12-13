@@ -26,10 +26,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	move_and_slide()
-	update_direction()
-	update_animation()
-	chase_player()
+	if alive:
+		move_and_slide()
+		update_direction()
+		update_animation()
+		chase_player()
 
 func update_direction():
 	if abs(velocity.x) > abs(velocity.y):
@@ -43,13 +44,12 @@ func update_direction():
 
 # formenlig overrides i child
 func update_animation():
-	if alive:
-		if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:
-			sprite.play("Idle_" + direction)
-		elif velocity.length() > 0:
-			sprite.play("Walk_" + direction)
-		elif attack_in_progress:
-			sprite.play("Attack_" + direction)
+	if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:
+		sprite.play("Idle_" + direction)
+	elif velocity.length() > 0:
+		sprite.play("Walk_" + direction)
+	elif attack_in_progress:
+		sprite.play("Attack_" + direction)
 
 # SKAL overrides i child
 # Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)
@@ -110,7 +110,7 @@ func _on_attack_cooldown_timeout() -> void:
 
 func chase_player():
 	if self.is_in_group("enemy"):
-		if alive && attack_in_progress == false:
+		if attack_in_progress == false:
 			if player != null:
 				velocity = (player.position - position).normalized() * speed
 			elif (position - spawn_coords).length() > 10:
@@ -135,7 +135,6 @@ func _on_tracking_area_body_exited(body: Node2D) -> void:
 			print(type + " lost " + body.get_type())
 
 func _on_attack_activation_timeout() -> void:
-	print("ogabooga")
 	for enemy in enemies_in_attack_range:
 		if enemy.alive:
 			enemy.take_dmg(do_dmg())

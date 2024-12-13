@@ -772,7 +772,7 @@ script = ExtResource("1_r825v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_yb5uw")
-animation = &"Idle_forward"
+animation = &"Death_forward"
 autoplay = "Idle_forward"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -800,9 +800,12 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[connection signal="body_entered" from="attack_area" to="." method="_on_enemy_hitbox_body_entered"]
-[connection signal="body_exited" from="attack_area" to="." method="_on_enemy_hitbox_body_exited"]
+[node name="attack_activation" type="Timer" parent="."]
+
+[connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="body_entered" from="tracking_area" to="." method="_on_tracking_area_body_entered"]
 [connection signal="body_exited" from="tracking_area" to="." method="_on_tracking_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="death" to="." method="_on_death_timeout"]
+[connection signal="timeout" from="attack_activation" to="." method="_on_attack_activation_timeout"]

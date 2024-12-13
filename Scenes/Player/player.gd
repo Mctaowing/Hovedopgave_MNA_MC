@@ -31,10 +31,11 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	get_input()
-	move_and_slide()
-	update_direction()
-	update_animation()
+	if alive:
+		get_input()
+		move_and_slide()
+		update_direction()
+		update_animation()
 	
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -51,7 +52,7 @@ func update_direction():
 	update_attack_area()
 
 func update_animation():
-	if velocity.length() == 0 && !sprite.is_playing():
+	if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:
 		sprite.play("Idle_" + direction)
 	elif velocity.length() > 0:
 		sprite.play("Walk_" + direction)
@@ -91,7 +92,6 @@ func take_dmg(amount: int):
 		alive = false
 		$CollisionShape2D.queue_free()
 		$attack_area.queue_free()
-		$tracking_area.queue_free()
 		sprite.play("Death")
 		$death.start()
 

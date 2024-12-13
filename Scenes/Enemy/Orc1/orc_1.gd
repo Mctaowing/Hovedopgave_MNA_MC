@@ -8,3 +8,15 @@ func _ready() -> void:
 	speed = 100
 	damage = 20
 	spawn_coords = position
+
+func take_dmg(amount: int):
+	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
+	health -= amount
+	if health <= 0:
+		print(str(self.get_type()) + " died.")
+		alive = false
+		$CollisionShape2D.queue_free()
+		$attack_area.queue_free()
+		$tracking_area.queue_free()
+		sprite.play("Death_" + direction)
+		$death.start()
