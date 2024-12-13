@@ -13,7 +13,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if active_areas.size() > 0 && can_interact:
 		active_areas.sort_custom(sort_by_distance_to_player)
 		label.text = base_text + active_areas[0].action_name

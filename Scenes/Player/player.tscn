@@ -417,23 +417,32 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrbaq"]
 size = Vector2(11, 4)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_t6nn2"]
-radius = 13.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcjs0"]
+radius = 7.0
+height = 24.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 3
 script = ExtResource("1_3xaeu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ulxob")
-animation = &"Idle_forward"
+animation = &"Walk_sideway"
 autoplay = "Idle_forward"
 offset = Vector2(0, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_vrbaq")
+
+[node name="attack_area" type="Area2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
+position = Vector2(0, 22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_fcjs0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -16)
@@ -449,19 +458,14 @@ theme_override_fonts/font = ExtResource("3_17yyk")
 theme_override_font_sizes/font_size = 10
 vertical_alignment = 2
 
-[node name="Player_Hitbox" type="Area2D" parent="."]
-position = Vector2(0, -16)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Hitbox"]
-position = Vector2(0, 9)
-shape = SubResource("CircleShape2D_t6nn2")
-
-[node name="Attack_cooldown" type="Timer" parent="."]
-
-[node name="Player_attack_cooldown" type="Timer" parent="."]
+[node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 0.5
 
-[connection signal="body_entered" from="Player_Hitbox" to="." method="_on_player_hitbox_body_entered"]
-[connection signal="body_exited" from="Player_Hitbox" to="." method="_on_player_hitbox_body_exited"]
-[connection signal="timeout" from="Attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="timeout" from="Player_attack_cooldown" to="." method="_on_player_attack_cooldown_timeout"]
+[node name="death" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
+[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="death" to="." method="_on_death_timeout"]
