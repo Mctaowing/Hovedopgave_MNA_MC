@@ -1,44 +1,35 @@
-class_name Player
+class_name Enemy
 extends CharacterBody2D
 
-@onready var interaction_manager = InteractionManager
-@onready var gold_display = $Camera2D/Gold
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
 
-var type: String = "Player"
-var direction: String
+var type: String
+var direction: String = "forward"
 var health: int
 var damage: int
 var speed: int
+var dropped_exp
+var spawn_coords: Vector2
 
 var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
-var gold = 0
+var player = null
 
 func get_type():
 	return type
-
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	type = "Player"
-	direction = "forward"
-	health = 200
-	damage = 20
-	speed = 200
-	gold_display.text = "Gold: " + str(gold)
-	
+	pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	get_input()
 	move_and_slide()
 	update_direction()
 	update_animation()
-	
-func get_input():
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = input_direction * speed
+	chase_player()
 
 func update_direction():
 	if abs(velocity.x) > abs(velocity.y):
@@ -50,33 +41,34 @@ func update_direction():
 		direction = "forward"
 	update_attack_area()
 
+# formenlig overrides i child
 func update_animation():
-	if velocity.length() == 0 && !sprite.is_playing():
-		sprite.play("Idle_" + direction)
-	elif velocity.length() > 0:
-		sprite.play("Walk_" + direction)
-	elif Input.is_action_just_pressed("attack")  == true:
-		sprite.play("Attack_" + direction)
-		attack()
+	if alive:
+		if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:
+			sprite.play("Idle_" + direction)
+		elif velocity.length() > 0:
+			sprite.play("Walk_" + direction)
+		elif attack_in_progress:
+			sprite.play("Attack_" + direction)
 
+# SKAL overrides i child
+# Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)
 func update_attack_area():
 	if direction == "forward":
-		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(0, 22))
+		pass
 	elif direction == "backward":
-		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(0, 10))
+		pass
 	elif direction == "sideway":
-		if sprite.flip_h == true:
-			attack_area_collision.transform = Transform2D(0, Vector2(1.2, 0.8), 0, Vector2(-10, 18))
-		else:
-			attack_area_collision.transform = Transform2D(0, Vector2(1.2, 0.8), 0, Vector2(10, 18))
+		if sprite.flip_h: #left
+			pass
+		else: #right
+			pass
 
 func attack():
 	if attack_in_progress == false:
 		attack_in_progress = true
 		$attack_cooldown.start()
-		for enemy in enemies_in_attack_range:
-			if enemy.alive:
-				enemy.take_dmg(do_dmg())
+		$attack_activation.start()
 
 func do_dmg():
 	var min_dmg = damage * 0.9
@@ -103,9 +95,10 @@ func _on_death_timeout() -> void:
 	$death.start()
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("player"):
 		enemies_in_attack_range.append(body)
 		print(str(body.get_type()) + " entered attack area.")
+		attack()
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
 	if body in enemies_in_attack_range:
@@ -115,7 +108,34 @@ func _on_attack_area_body_exited(body: Node2D) -> void:
 func _on_attack_cooldown_timeout() -> void:
 	attack_in_progress = false
 
-func update_gold(amount: int):
-	gold += amount
-	gold_display.text = "Gold: " + str(gold)
-	
+func chase_player():
+	if self.is_in_group("enemy"):
+		if alive && attack_in_progress == false:
+			if player != null:
+				velocity = (player.position - position).normalized() * speed
+			elif (position - spawn_coords).length() > 10:
+				velocity = (spawn_coords - position).normalized() * speed
+			else:
+				velocity = Vector2(0, 0)
+		else:
+			velocity = Vector2(0, 0)
+
+func _on_tracking_area_body_entered(body: Node2D) -> void:
+	print("trigger entered")
+	if self.is_in_group("enemy"):
+		if body.is_in_group("player"):
+			player = body
+			print(type + " tracking " + body.get_type())
+
+func _on_tracking_area_body_exited(body: Node2D) -> void:
+	print("trigger exited")
+	if self.is_in_group("enemy"):
+		if body.is_in_group("player"):
+			player = null
+			print(type + " lost " + body.get_type())
+
+func _on_attack_activation_timeout() -> void:
+	print("ogabooga")
+	for enemy in enemies_in_attack_range:
+		if enemy.alive:
+			enemy.take_dmg(do_dmg())

@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://pguyi3hj71rf"]
 
-[ext_resource type="Script" path="res://Scenes/Being/being.gd" id="1_4yhii"]
+[ext_resource type="Script" path="res://Scenes/Enemy/enemy.gd" id="1_a8aow"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_4yhii")
+[node name="enemy" type="CharacterBody2D"]
+script = ExtResource("1_a8aow")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 
@@ -13,14 +13,26 @@ script = ExtResource("1_4yhii")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
 
-[node name="attack_cooldown" type="Timer" parent="."]
-wait_time = 0.5
+[node name="tracking_area" type="Area2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 
-[node name="death" type="Timer" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tracking_area"]
+
+[node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
+[node name="death" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="attack_activation" type="Timer" parent="."]
+
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
+[connection signal="body_entered" from="tracking_area" to="." method="_on_tracking_area_body_entered"]
+[connection signal="body_exited" from="tracking_area" to="." method="_on_tracking_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="death" to="." method="_on_death_timeout"]
+[connection signal="timeout" from="attack_activation" to="." method="_on_attack_activation_timeout"]

@@ -423,12 +423,12 @@ height = 24.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 3
 script = ExtResource("1_3xaeu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ulxob")
-animation = &"Idle_forward"
+animation = &"Walk_sideway"
 autoplay = "Idle_forward"
 offset = Vector2(0, -16)
 
@@ -465,8 +465,7 @@ wait_time = 0.5
 wait_time = 0.2
 one_shot = true
 
-[connection signal="body_entered" from="attack_area" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
-[connection signal="body_exited" from="attack_area" to="." method="_on_player_hitbox_body_exited"]
+[connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="death" to="." method="_on_death_timeout"]

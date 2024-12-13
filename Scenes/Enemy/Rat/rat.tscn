@@ -1,7 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://g52yi7744jyk"]
+[gd_scene load_steps=38 format=3 uid="uid://g52yi7744jyk"]
 
 [ext_resource type="Texture2D" uid="uid://b3yrxcwfogygn" path="res://Assets/Enemy Galore 1 - Pixel Art/Sprites/Rat/Rat_Full_FX.png" id="1_6lk5x"]
-[ext_resource type="Script" path="res://Scenes/Being/Rat/rat.gd" id="1_y60t4"]
+[ext_resource type="Script" path="res://Scenes/Enemy/Rat/rat.gd" id="1_y60t4"]
 [ext_resource type="Texture2D" uid="uid://dbx3fe88clsk" path="res://Assets/Enemy Galore 1 - Pixel Art/Sprites/Rat/Rat_Hit.png" id="2_6cvh2"]
 [ext_resource type="Texture2D" uid="uid://5ji2t3afjj8q" path="res://Assets/Enemy Galore 1 - Pixel Art/Sprites/Rat/Rat_Idle.png" id="3_iqggq"]
 [ext_resource type="Texture2D" uid="uid://bwou64fs6eahe" path="res://Assets/Enemy Galore 1 - Pixel Art/Sprites/Rat/Rat_Run.png" id="4_8u7c6"]
@@ -202,7 +202,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5sqmu")
 }],
-"loop": true,
+"loop": false,
 "name": &"Idle",
 "speed": 6.0
 }, {
@@ -225,7 +225,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5v5jw")
 }],
-"loop": true,
+"loop": false,
 "name": &"Run",
 "speed": 10.0
 }]
@@ -234,8 +234,12 @@ animations = [{
 size = Vector2(13, 4)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6uk2y"]
-radius = 5.0
-height = 20.0
+radius = 12.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oyssj"]
+radius = 59.0
+height = 194.0
 
 [node name="rat" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
@@ -243,7 +247,7 @@ script = ExtResource("1_y60t4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_21mlv")
-animation = &"Idle"
+animation = &"Attack"
 autoplay = "Idle"
 offset = Vector2(0, -15)
 
@@ -254,18 +258,32 @@ shape = SubResource("RectangleShape2D_ahjj1")
 [node name="attack_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
-position = Vector2(8, 0)
+position = Vector2(11, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_6uk2y")
 
+[node name="tracking_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tracking_area"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_oyssj")
+
 [node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
 
 [node name="death" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
 
+[node name="attack_activation" type="Timer" parent="."]
+
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
+[connection signal="body_entered" from="tracking_area" to="." method="_on_tracking_area_body_entered"]
+[connection signal="body_exited" from="tracking_area" to="." method="_on_tracking_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="death" to="." method="_on_death_timeout"]
+[connection signal="timeout" from="attack_activation" to="." method="_on_attack_activation_timeout"]
