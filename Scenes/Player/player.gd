@@ -105,12 +105,12 @@ func _on_death_timeout() -> void:
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
 		enemies_in_attack_range.append(body)
-		print(str(body.get_type()) + " entered attack area.")
+		print(str(body.get_type()) + " entered " + type + "'s attack area.")
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
 	if body in enemies_in_attack_range:
 		enemies_in_attack_range.erase(body)
-		print(str(body.get_type()) + " exited attack area.")
+		print(str(body.get_type()) + " exited " + type + "'s attack area.")
 
 func _on_attack_cooldown_timeout() -> void:
 	attack_in_progress = false
