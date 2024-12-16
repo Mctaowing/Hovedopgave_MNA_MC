@@ -3,9 +3,11 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
+@onready var health_bar: ProgressBar = $ProgressBar
 
 var type: String
 var direction: String = "forward"
+var max_health: int
 var health: int
 var damage: int
 var speed: int
@@ -33,6 +35,7 @@ func _process(_delta: float) -> void:
 		update_animation()
 		chase_player()
 		attack()
+		update_health_bar()
 
 func update_direction():
 	if abs(velocity.x) > abs(velocity.y):
@@ -87,6 +90,7 @@ func take_dmg(amount: int):
 		$CollisionShape2D.queue_free()
 		$attack_area.queue_free()
 		$tracking_area.queue_free()
+		health_bar.queue_free()
 		sprite.play("Death")
 		$death.start()
 
@@ -129,15 +133,20 @@ func chase_player():
 			velocity = Vector2(0, 0)
 
 func _on_tracking_area_body_entered(body: Node2D) -> void:
-	print("trigger entered")
 	if self.is_in_group("enemy"):
 		if body.is_in_group("player"):
 			player = body
 			print(type + " tracking " + body.get_type())
 
 func _on_tracking_area_body_exited(body: Node2D) -> void:
-	print("trigger exited")
 	if self.is_in_group("enemy"):
 		if body.is_in_group("player"):
 			player = null
 			print(type + " lost " + body.get_type())
+
+func update_health_bar():
+	health_bar.value = health
+	if health > 0 && health < max_health:
+		health_bar.visible = true
+	else:
+		health_bar.visible = false

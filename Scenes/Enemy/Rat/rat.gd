@@ -4,8 +4,10 @@ extends "res://Scenes/Enemy/enemy.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	type = "Rat"
-	health = 10
-	damage = 2
+	max_health = 30
+	health = max_health
+	health_bar.max_value = max_health
+	damage = 10
 	speed = 80
 	spawn_coords = position
 

@@ -5,9 +5,11 @@ extends CharacterBody2D
 @onready var gold_display = $Camera2D/Gold
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
+@onready var health_bar: ProgressBar = $ProgressBar
 
 var type: String = "Player"
 var direction: String
+var max_health: int
 var health: int
 var damage: int
 var speed: int
@@ -24,7 +26,9 @@ func get_type():
 func _ready() -> void:
 	type = "Player"
 	direction = "forward"
-	health = 200
+	max_health = 200
+	health = max_health
+	health_bar.max_value = max_health
 	damage = 20
 	speed = 200
 	gold_display.text = "Gold: " + str(gold)
@@ -36,6 +40,7 @@ func _process(_delta: float) -> void:
 		move_and_slide()
 		update_direction()
 		update_animation()
+		update_health_bar()
 	
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -119,3 +124,16 @@ func update_gold(amount: int):
 	gold += amount
 	gold_display.text = "Gold: " + str(gold)
 	
+func update_health_bar():
+	health_bar.value = health
+	if health > 0 && health < max_health:
+		health_bar.visible = true
+	else:
+		health_bar.visible = false
+
+func _on_regen_timer_timeout() -> void:
+	if alive:
+		if health < max_health:
+			health += 10
+			if health > max_health:
+				health = max_health
