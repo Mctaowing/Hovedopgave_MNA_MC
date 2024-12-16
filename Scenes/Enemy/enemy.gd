@@ -3,9 +3,11 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
+@onready var health_bar: ProgressBar = $ProgressBar
 
 var type: String
 var direction: String = "forward"
+var max_health: int
 var health: int
 var damage: int
 var speed: int
@@ -16,6 +18,7 @@ var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
 var player = null
+var atk_anim = false
 
 func get_type():
 	return type
@@ -31,6 +34,8 @@ func _process(_delta: float) -> void:
 		update_direction()
 		update_animation()
 		chase_player()
+		attack()
+		update_health_bar()
 
 func update_direction():
 	if abs(velocity.x) > abs(velocity.y):
@@ -48,8 +53,9 @@ func update_animation():
 		sprite.play("Idle_" + direction)
 	elif velocity.length() > 0:
 		sprite.play("Walk_" + direction)
-	elif attack_in_progress:
+	elif atk_anim:
 		sprite.play("Attack_" + direction)
+		atk_anim = false
 
 # SKAL overrides i child
 # Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)
@@ -65,7 +71,7 @@ func update_attack_area():
 			pass
 
 func attack():
-	if attack_in_progress == false:
+	if enemies_in_attack_range.size() > 0 && attack_in_progress == false:
 		attack_in_progress = true
 		$attack_cooldown.start()
 		$attack_activation.start()
@@ -84,6 +90,7 @@ func take_dmg(amount: int):
 		$CollisionShape2D.queue_free()
 		$attack_area.queue_free()
 		$tracking_area.queue_free()
+		health_bar.queue_free()
 		sprite.play("Death")
 		$death.start()
 
@@ -97,16 +104,21 @@ func _on_death_timeout() -> void:
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		enemies_in_attack_range.append(body)
-		print(str(body.get_type()) + " entered attack area.")
-		attack()
+		print(str(body.get_type()) + " entered " + type + "'s attack area.")
 
 func _on_attack_area_body_exited(body: Node2D) -> void:
 	if body in enemies_in_attack_range:
 		enemies_in_attack_range.erase(body)
-		print(str(body.get_type()) + " exited attack area.")
+		print(str(body.get_type()) + " exited " + type + "'s attack area.")
 
 func _on_attack_cooldown_timeout() -> void:
 	attack_in_progress = false
+
+func _on_attack_activation_timeout() -> void:
+	atk_anim = true
+	for enemy in enemies_in_attack_range:
+		if enemy.alive:
+			enemy.take_dmg(do_dmg())
 
 func chase_player():
 	if self.is_in_group("enemy"):
@@ -121,20 +133,20 @@ func chase_player():
 			velocity = Vector2(0, 0)
 
 func _on_tracking_area_body_entered(body: Node2D) -> void:
-	print("trigger entered")
 	if self.is_in_group("enemy"):
 		if body.is_in_group("player"):
 			player = body
 			print(type + " tracking " + body.get_type())
 
 func _on_tracking_area_body_exited(body: Node2D) -> void:
-	print("trigger exited")
 	if self.is_in_group("enemy"):
 		if body.is_in_group("player"):
 			player = null
 			print(type + " lost " + body.get_type())
 
-func _on_attack_activation_timeout() -> void:
-	for enemy in enemies_in_attack_range:
-		if enemy.alive:
-			enemy.take_dmg(do_dmg())
+func update_health_bar():
+	health_bar.value = health
+	if health > 0 && health < max_health:
+		health_bar.visible = true
+	else:
+		health_bar.visible = false

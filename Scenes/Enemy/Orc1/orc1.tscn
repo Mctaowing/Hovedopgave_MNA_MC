@@ -757,8 +757,9 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryvkq"]
-size = Vector2(17, 8)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_evq5l"]
+radius = 4.0
+height = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sr2j8"]
 radius = 21.0
@@ -768,20 +769,25 @@ radius = 74.0065
 height = 194.013
 
 [node name="Orc" type="CharacterBody2D" groups=["enemy"]]
+y_sort_enabled = true
 script = ExtResource("1_r825v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_yb5uw")
 animation = &"Death_forward"
 autoplay = "Idle_forward"
+offset = Vector2(0, -8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 6)
-shape = SubResource("RectangleShape2D_ryvkq")
+position = Vector2(-1, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_evq5l")
 
 [node name="attack_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
+position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_sr2j8")
 
 [node name="tracking_area" type="Area2D" parent="."]
@@ -789,10 +795,13 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tracking_area"]
-rotation = -1.56734
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_erfks")
 
 [node name="attack_cooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="attack_activation" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
@@ -800,12 +809,19 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="attack_activation" type="Timer" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0, 0.847059, 0, 1)
+offset_left = -7.0
+offset_top = -31.0
+offset_right = 123.0
+offset_bottom = -11.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="body_entered" from="tracking_area" to="." method="_on_tracking_area_body_entered"]
 [connection signal="body_exited" from="tracking_area" to="." method="_on_tracking_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="timeout" from="death" to="." method="_on_death_timeout"]
 [connection signal="timeout" from="attack_activation" to="." method="_on_attack_activation_timeout"]
+[connection signal="timeout" from="death" to="." method="_on_death_timeout"]

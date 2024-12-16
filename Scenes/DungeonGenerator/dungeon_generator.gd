@@ -18,6 +18,8 @@ var wallArray = []
 var floorArray = []
 var dungeonTileArray = []
 
+var enemyArray = []
+
 func _ready():
 	randomize()
 	initalize_grid()
@@ -144,21 +146,31 @@ func draw_dungeon():
 
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
-		var enemy_count = randi_range(2, 5)
+		var enemy_count = randi_range(2, 4)
 		var room = rooms[i]
 		for j in range(enemy_count):
-			var enemy_position = get_random_position_in_room(room) * CELL_SIZE 
+			
+			var enemy_position
+			var tooClose
+			while tooClose != false:
+				tooClose = false
+				enemy_position = get_random_position_in_room(room) * CELL_SIZE
+				for enemy in enemyArray:
+					if enemy_position.distance_to(enemy.position) < 50:
+						tooClose = true
+					
 			var new_enemy = orc1.instantiate()
 			new_enemy.position = enemy_position
 			new_enemy.name = "enemy_R" + str(i) + "_N" + str(j)
 			add_child(new_enemy)
+			enemyArray.append(new_enemy)
 			print(new_enemy.name, " ", new_enemy.position)
 
 func get_random_position_in_room(room) -> Vector2:
-	var room_min_x = room.position.x +1
-	var room_min_y = room.position.y + 2
-	var room_max_x = room.size.x - 1
-	var room_max_y = room.size.y - 1
+	var room_min_x = room.position.x +2
+	var room_min_y = room.position.y +3
+	var room_max_x = room.position.x + room.size.x -2
+	var room_max_y = room.position.y + room.size.y -2
 	
 	var rand_x = randi_range(room_min_x, room_max_x)
 	var rand_y = randi_range(room_min_y, room_max_y)

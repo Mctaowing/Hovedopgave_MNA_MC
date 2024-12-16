@@ -235,7 +235,8 @@ radius = 3.0
 height = 11.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6uk2y"]
-height = 24.0
+radius = 12.0
+height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oyssj"]
 radius = 59.0
@@ -259,7 +260,7 @@ shape = SubResource("CapsuleShape2D_3yfp1")
 [node name="attack_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
-position = Vector2(10, 0)
+position = Vector2(11, 0)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_6uk2y")
 
@@ -272,25 +273,15 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_oyssj")
 
 [node name="attack_cooldown" type="Timer" parent="."]
-wait_time = 0.8
 one_shot = true
 
 [node name="attack_activation" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 1.5
 one_shot = true
 
 [node name="death" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-modulate = Color(0, 0.847059, 0, 1)
-offset_left = -6.0
-offset_top = -15.0
-offset_right = 124.0
-offset_bottom = 5.0
-scale = Vector2(0.1, 0.1)
-show_percentage = false
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
