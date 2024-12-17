@@ -32,7 +32,7 @@ func _ready() -> void:
 	damage = 20
 	speed = 200
 	gold_display.text = "Gold: " + str(gold)
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if alive:
@@ -41,7 +41,8 @@ func _process(_delta: float) -> void:
 		update_direction()
 		update_animation()
 		update_health_bar()
-	
+		teleport_out_of_dungeon()
+
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = input_direction * speed
@@ -137,3 +138,9 @@ func _on_regen_timer_timeout() -> void:
 			health += 10
 			if health > max_health:
 				health = max_health
+
+func teleport_out_of_dungeon():
+	if Input.is_action_just_pressed("teleport") and global.current_scene == "dungeon_generator":
+		global.transition_scene = true
+		get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
+		global.finish_change_scenes()
