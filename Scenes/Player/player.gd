@@ -18,6 +18,7 @@ var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
 var gold = 0
+var in_combat = false
 
 func get_type():
 	return type
@@ -109,6 +110,8 @@ func _on_death_timeout() -> void:
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
+		in_combat = true
+		$in_combat.start()
 		enemies_in_attack_range.append(body)
 		print(str(body.get_type()) + " entered " + type + "'s attack area.")
 
@@ -133,7 +136,10 @@ func update_health_bar():
 
 func _on_regen_timer_timeout() -> void:
 	if alive:
-		if health < max_health:
+		if health < max_health && in_combat == false:
 			health += 10
 			if health > max_health:
 				health = max_health
+
+func _on_in_combat_timeout() -> void:
+	in_combat = false
