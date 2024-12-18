@@ -19,6 +19,15 @@ visibility_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tracking_area"]
 
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0, 0.847059, 0, 1)
+offset_left = -6.0
+offset_top = -21.0
+offset_right = 124.0
+offset_bottom = -1.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
 [node name="attack_cooldown" type="Timer" parent="."]
 one_shot = true
 
@@ -29,15 +38,6 @@ one_shot = true
 [node name="death" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-modulate = Color(0, 0.847059, 0, 1)
-offset_left = -6.0
-offset_top = -21.0
-offset_right = 124.0
-offset_bottom = -1.0
-scale = Vector2(0.1, 0.1)
-show_percentage = false
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]

@@ -11,15 +11,14 @@ func _ready() -> void:
 	damage = 20
 	spawn_coords = position
 
-func take_dmg(amount: int):
-	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
-	health -= amount
-	if health <= 0:
-		print(str(self.get_type()) + " died.")
-		alive = false
-		$CollisionShape2D.queue_free()
-		$attack_area.queue_free()
-		$tracking_area.queue_free()
-		health_bar.queue_free()
-		sprite.play("Death_" + direction)
-		$death.start()
+# Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)
+func update_attack_area():
+	if direction == "forward":
+		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(0, 7))
+	elif direction == "backward":
+		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(0, -9))
+	elif direction == "sideway":
+		if sprite.flip_h: #left
+			attack_area_collision.transform = Transform2D(deg_to_rad(0), Vector2(1, 0.8), 0, Vector2(-17, 0))
+		else: #right
+			attack_area_collision.transform = Transform2D(deg_to_rad(0), Vector2(1, 0.8), 0, Vector2(15, 0))

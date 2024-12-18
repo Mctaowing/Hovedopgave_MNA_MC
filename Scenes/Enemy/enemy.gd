@@ -91,7 +91,7 @@ func take_dmg(amount: int):
 		$attack_area.queue_free()
 		$tracking_area.queue_free()
 		health_bar.queue_free()
-		sprite.play("Death")
+		sprite.play("Death_" + direction)
 		$death.start()
 
 func _on_death_timeout() -> void:

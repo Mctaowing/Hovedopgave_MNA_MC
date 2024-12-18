@@ -34,3 +34,16 @@ func update_attack_area():
 		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(-10, 0))
 	else:
 		attack_area_collision.transform = Transform2D(deg_to_rad(90), Vector2(1, 1), 0, Vector2(10, 0))
+
+func take_dmg(amount: int):
+	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
+	health -= amount
+	if health <= 0:
+		print(str(self.get_type()) + " died.")
+		alive = false
+		$CollisionShape2D.queue_free()
+		$attack_area.queue_free()
+		$tracking_area.queue_free()
+		health_bar.queue_free()
+		sprite.play("Death")
+		$death.start()
