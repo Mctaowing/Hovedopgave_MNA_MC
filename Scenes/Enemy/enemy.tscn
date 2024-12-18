@@ -21,6 +21,7 @@ visibility_layer = 2
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.847059, 0, 1)
+z_index = 1
 offset_left = -6.0
 offset_top = -21.0
 offset_right = 124.0

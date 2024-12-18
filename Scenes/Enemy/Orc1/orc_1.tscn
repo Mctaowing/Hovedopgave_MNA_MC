@@ -802,6 +802,7 @@ shape = SubResource("CapsuleShape2D_erfks")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.847059, 0, 1)
+z_index = 1
 offset_left = -7.0
 offset_top = -31.0
 offset_right = 123.0

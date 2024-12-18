@@ -136,6 +136,12 @@ func update_health_bar():
 	health_bar.value = health
 	if health > 0 && health < max_health:
 		health_bar.visible = true
+		if health_bar.value <= max_health * 0.25:
+			health_bar.modulate = Color("#e50000", 1)
+		elif health_bar.value <= max_health / 2:
+			health_bar.modulate = Color("#e5b900", 1)
+		else:
+			health_bar.modulate = Color("#00d800", 1)
 	else:
 		health_bar.visible = false
 

@@ -273,6 +273,7 @@ shape = SubResource("CapsuleShape2D_oyssj")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.847059, 0, 1)
+z_index = 1
 offset_left = -6.0
 offset_top = -15.0
 offset_right = 124.0
