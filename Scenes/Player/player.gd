@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
 @onready var health_bar: ProgressBar = $ProgressBar
+@onready var camera: Camera2D = $Camera2D
 
 var type: String = "Player"
 var direction: String
@@ -32,6 +33,7 @@ func _ready() -> void:
 	damage = 20
 	speed = 200
 	gold_display.text = "Gold: " + str(gold)
+	set_camera_limit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -144,3 +146,16 @@ func teleport_out_of_dungeon():
 		global.transition_scene = true
 		get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
 		global.finish_change_scenes()
+
+func set_camera_limit():
+	if global.current_scene == "dungeon_generator":
+		camera.limit_left = -100000
+		camera.limit_right = 100000
+		camera.limit_top = -100000
+		camera.limit_bottom = 100000
+	else:
+		camera.limit_left = 6
+		camera.limit_top = 32
+		camera.limit_bottom = 1184
+		camera.limit_right = 1158
+		camera.limit_smoothed = true
