@@ -2,8 +2,9 @@ extends Node2D
 
 @onready var tile_map_layer = $TileMapLayer
 @onready var player = $CharacterBody2D
-@onready var chest_Scene = preload("res://Scenes/Chest/chest.tscn")
-@onready var orc1_Scene = preload("res://Scenes/Enemy/Orc1/orc1.tscn")
+@onready var chest_scene = preload("res://Scenes/Chest/chest.tscn")
+@onready var orc1_scene = preload("res://Scenes/Enemy/Orc1/orc_1.tscn")
+@onready var orc2_scene = preload("res://Scenes/Enemy/Orc2/orc_2.tscn")
 
 const WIDTH = 100
 const HEIGHT = 80
@@ -150,8 +151,10 @@ func draw_dungeon():
 func spawn_enemies_in_rooms():
 	for i in range(1, rooms.size()):
 		var enemy_count = randi_range(2, 4)
+		var orc1_count = randi_range(1, 3)
+		var orc2_count = randi_range(0, 2)
 		var room = rooms[i]
-		for j in range(enemy_count):
+		for j in range(orc1_count):
 			
 			var enemy_position
 			var tooClose
@@ -162,9 +165,27 @@ func spawn_enemies_in_rooms():
 					if enemy_position.distance_to(enemy.position) < 50:
 						tooClose = true
 					
-			var new_enemy = orc1_Scene.instantiate()
+			var new_enemy = orc1_scene.instantiate()
 			new_enemy.position = enemy_position
-			new_enemy.name = "enemy_R" + str(i) + "_N" + str(j)
+			new_enemy.name = "orc1_R" + str(i) + "_N" + str(j)
+			add_child(new_enemy)
+			enemyArray.append(new_enemy)
+			print(new_enemy.name, " ", new_enemy.position)
+			
+		for j in range(orc2_count):
+			
+			var enemy_position
+			var tooClose
+			while tooClose != false:
+				tooClose = false
+				enemy_position = get_random_position_in_room(room) * CELL_SIZE
+				for enemy in enemyArray:
+					if enemy_position.distance_to(enemy.position) < 50:
+						tooClose = true
+					
+			var new_enemy = orc2_scene.instantiate()
+			new_enemy.position = enemy_position
+			new_enemy.name = "orc2_R" + str(i) + "_N" + str(j)
 			add_child(new_enemy)
 			enemyArray.append(new_enemy)
 			print(new_enemy.name, " ", new_enemy.position)
@@ -186,7 +207,7 @@ func spawn_chests_in_rooms():
 				if chest_position.distance_to(_chest.position) < 50:
 					tooClose = true
 					
-		var new_chest = chest_Scene.instantiate()
+		var new_chest = chest_scene.instantiate()
 		new_chest.position = chest_position
 		new_chest.name = "chest_R" + str(chest_room) + "_N" + str(chest)
 		add_child(new_chest)

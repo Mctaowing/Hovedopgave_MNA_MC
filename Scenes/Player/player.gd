@@ -98,6 +98,7 @@ func take_dmg(amount: int):
 		alive = false
 		$CollisionShape2D.queue_free()
 		$attack_area.queue_free()
+		health_bar.queue_free()
 		sprite.play("Death")
 		$death.start()
 
@@ -138,8 +139,8 @@ func update_health_bar():
 func _on_regen_timer_timeout() -> void:
 	if alive:
 		if health < max_health && in_combat == false:
-			health += 10
-			print(type + " regained 10 HP")
+			health += 15
+			print(type + " regained 15 HP")
 			if health > max_health:
 				health = max_health
 
