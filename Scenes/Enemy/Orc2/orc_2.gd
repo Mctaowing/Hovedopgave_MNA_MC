@@ -1,14 +1,14 @@
-class_name Orc1
+class_name Orc2
 extends "res://Scenes/Enemy/enemy.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	type = "Orc1"
-	max_health = 100
+	type = "Orc2"
+	max_health = 200
 	health = max_health
 	health_bar.max_value = max_health
 	speed = 100
-	damage = 20
+	damage = 30
 	spawn_coords = position
 
 # Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)

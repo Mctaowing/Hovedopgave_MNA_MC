@@ -19,6 +19,7 @@ var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
 var gold = 0
+var in_combat = false
 
 func get_type():
 	return type
@@ -100,6 +101,7 @@ func take_dmg(amount: int):
 		alive = false
 		$CollisionShape2D.queue_free()
 		$attack_area.queue_free()
+		health_bar.queue_free()
 		sprite.play("Death")
 		$death.start()
 
@@ -112,6 +114,8 @@ func _on_death_timeout() -> void:
 
 func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy"):
+		in_combat = true
+		$in_combat.start()
 		enemies_in_attack_range.append(body)
 		print(str(body.get_type()) + " entered " + type + "'s attack area.")
 
@@ -126,6 +130,7 @@ func _on_attack_cooldown_timeout() -> void:
 func update_gold(amount: int):
 	gold += amount
 	gold_display.text = "Gold: " + str(gold)
+	print(type + " got " + str(amount) + " gold")
 	
 func update_health_bar():
 	health_bar.value = health
@@ -136,8 +141,9 @@ func update_health_bar():
 
 func _on_regen_timer_timeout() -> void:
 	if alive:
-		if health < max_health:
-			health += 10
+		if health < max_health && in_combat == false:
+			health += 15
+			print(type + " regained 15 HP")
 			if health > max_health:
 				health = max_health
 
@@ -159,3 +165,6 @@ func set_camera_limit():
 		camera.limit_bottom = 1184
 		camera.limit_right = 1158
 		camera.limit_smoothed = true
+
+func _on_in_combat_timeout() -> void:
+	in_combat = false
