@@ -678,6 +678,7 @@ sources/0 = SubResource("TileSetAtlasSource_qdq6j")
 sources/1 = SubResource("TileSetAtlasSource_06iw5")
 
 [node name="DungeonGenerator" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_wh2ns")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

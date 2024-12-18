@@ -126,6 +126,7 @@ func _on_attack_cooldown_timeout() -> void:
 func update_gold(amount: int):
 	gold += amount
 	gold_display.text = "Gold: " + str(gold)
+	print(type + " got " + str(amount) + " gold")
 	
 func update_health_bar():
 	health_bar.value = health
@@ -138,6 +139,7 @@ func _on_regen_timer_timeout() -> void:
 	if alive:
 		if health < max_health && in_combat == false:
 			health += 10
+			print(type + " regained 10 HP")
 			if health > max_health:
 				health = max_health
 
