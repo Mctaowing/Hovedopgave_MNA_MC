@@ -18,7 +18,7 @@ var speed: int
 var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
-var gold = 0
+var gold = global.gold
 var in_combat = false
 
 func get_type():
@@ -33,6 +33,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	damage = 20
 	speed = 200
+	gold = global.gold
 	gold_display.text = "Gold: " + str(gold)
 	set_camera_limit()
 
@@ -128,7 +129,8 @@ func _on_attack_cooldown_timeout() -> void:
 	attack_in_progress = false
 
 func update_gold(amount: int):
-	gold += amount
+	global.gold += amount
+	gold = global.gold
 	gold_display.text = "Gold: " + str(gold)
 	print(type + " got " + str(amount) + " gold")
 	

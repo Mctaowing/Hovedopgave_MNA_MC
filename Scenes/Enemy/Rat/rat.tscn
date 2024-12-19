@@ -286,7 +286,7 @@ wait_time = 0.8
 one_shot = true
 
 [node name="attack_activation" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.35
 one_shot = true
 
 [node name="death" type="Timer" parent="."]
