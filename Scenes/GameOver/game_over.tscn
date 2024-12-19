@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="1_6s0ev"]
 [ext_resource type="Script" path="res://Scenes/GameOver/game_over.gd" id="1_dd02e"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="game_over_screen" type="CanvasLayer"]
 visible = false
 script = ExtResource("1_dd02e")
 
@@ -46,3 +46,5 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_6s0ev")
 theme_override_font_sizes/font_size = 30
 text = "RESTART"
+
+[connection signal="pressed" from="Control/restart_button" to="." method="restart_game"]

@@ -109,7 +109,7 @@ func _on_death_timeout() -> void:
 	sprite.modulate.a -= 0.05
 	#print(sprite.modulate.a)
 	if sprite.modulate.a <= 0:
-		self.queue_free()
+		GameOver.show_screen()
 	$death.start()
 
 func _on_attack_area_body_entered(body: Node2D) -> void:

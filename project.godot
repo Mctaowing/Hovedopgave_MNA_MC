@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 global="*res://global.gd"
 InteractionManager="*res://Scenes/Interaction/interaction_manager.tscn"
+GameOver="*res://Scenes/GameOver/game_over.tscn"
 
 [global_group]
 
