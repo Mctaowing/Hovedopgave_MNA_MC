@@ -451,6 +451,7 @@ offset = Vector2(0, -16)
 zoom = Vector2(3, 3)
 
 [node name="Gold" type="Label" parent="Camera2D"]
+visible = false
 z_index = 20
 offset_left = -192.0
 offset_top = 69.0
@@ -483,6 +484,16 @@ autostart = true
 [node name="in_combat" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]

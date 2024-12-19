@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @onready var interaction_manager = InteractionManager
-@onready var gold_display = $Camera2D/Gold
+@onready var gold_display = $CanvasLayer/Label
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
 @onready var health_bar: ProgressBar = $ProgressBar
