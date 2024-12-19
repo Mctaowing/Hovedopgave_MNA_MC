@@ -149,62 +149,32 @@ func draw_dungeon():
 	tile_map_layer.set_cells_terrain_connect(dungeonTileArray, 0, 0, true)
 	tile_map_layer.set_cells_terrain_connect(floorArray, 0, 1, true)
 
+func instantiate_enemy(scene, type:String, min_amount:int, max_amount:int, min_room:int, max_room:int):
+	for room_number in range(min_room, max_room):
+		var room = rooms[room_number]
+		for enemy_number in randi_range(min_amount, max_amount):
+			var _position
+			var tooClose
+			var tries = 0
+			while tooClose != false or tries >= 10:
+				tooClose = false
+				_position = get_random_position_in_room(room) * CELL_SIZE
+				for enemy in enemyArray:
+					if _position.distance_to(enemy.position) < 50:
+						tooClose = true
+				tries += 1
+					
+			var new_enemy = scene.instantiate()
+			new_enemy.position = _position
+			new_enemy.name = type + "_R" + str(room_number) + "_N" + str(enemy_number)
+			add_child(new_enemy)
+			enemyArray.append(new_enemy)
+			print(new_enemy.name, " ", new_enemy.position)
+
 func spawn_enemies_in_rooms():
-	for i in range(1, rooms.size()):
-		var enemy_count = randi_range(2, 4)
-		var orc1_count = randi_range(1, 3)
-		var orc2_count = randi_range(0, 2)
-		var room = rooms[i]
-		
-		for j in range(orc1_count):
-			var enemy_position
-			var tooClose
-			while tooClose != false:
-				tooClose = false
-				enemy_position = get_random_position_in_room(room) * CELL_SIZE
-				for enemy in enemyArray:
-					if enemy_position.distance_to(enemy.position) < 50:
-						tooClose = true
-					
-			var new_enemy = orc1_scene.instantiate()
-			new_enemy.position = enemy_position
-			new_enemy.name = "orc1_R" + str(i) + "_N" + str(j)
-			add_child(new_enemy)
-			enemyArray.append(new_enemy)
-			print(new_enemy.name, " ", new_enemy.position)
-			
-		for j in range(orc2_count):
-			var enemy_position
-			var tooClose
-			while tooClose != false:
-				tooClose = false
-				enemy_position = get_random_position_in_room(room) * CELL_SIZE
-				for enemy in enemyArray:
-					if enemy_position.distance_to(enemy.position) < 50:
-						tooClose = true
-					
-			var new_enemy = orc2_scene.instantiate()
-			new_enemy.position = enemy_position
-			new_enemy.name = "orc2_R" + str(i) + "_N" + str(j)
-			add_child(new_enemy)
-			enemyArray.append(new_enemy)
-			print(new_enemy.name, " ", new_enemy.position)
-		
-	var enemy_position
-	var tooClose
-	while tooClose != false:
-		tooClose = false
-		enemy_position = get_random_position_in_room(rooms[rooms.size()-1]) * CELL_SIZE
-		for enemy in enemyArray:
-			if enemy_position.distance_to(enemy.position) < 50:
-				tooClose = true
-			
-	var new_enemy = orc3_scene.instantiate()
-	new_enemy.position = enemy_position
-	new_enemy.name = "orc3_R" + str(rooms.size()-1)
-	add_child(new_enemy)
-	enemyArray.append(new_enemy)
-	print(new_enemy.name, " ", new_enemy.position)
+	instantiate_enemy(orc1_scene, "orc1", 1, 3, 1, rooms.size())
+	instantiate_enemy(orc2_scene, "orc2", 0, 2, 1, rooms.size())
+	instantiate_enemy(orc3_scene, "orc3", 1, 1, rooms.size()-1, rooms.size())
 
 func spawn_chests_in_rooms():
 	var chest_amount = randi_range(2, 4)

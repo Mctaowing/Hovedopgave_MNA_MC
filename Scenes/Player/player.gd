@@ -46,6 +46,7 @@ func _process(_delta: float) -> void:
 		update_animation()
 		update_health_bar()
 		teleport_out_of_dungeon()
+		set_camera_limit()
 
 func get_input():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
@@ -162,17 +163,17 @@ func teleport_out_of_dungeon():
 		global.finish_change_scenes()
 
 func set_camera_limit():
-	if global.current_scene == "dungeon_generator":
-		camera.limit_left = -100000
-		camera.limit_right = 100000
-		camera.limit_top = -100000
-		camera.limit_bottom = 100000
-	else:
+	if global.current_scene == "game":
 		camera.limit_left = 6
 		camera.limit_top = 32
 		camera.limit_bottom = 1184
 		camera.limit_right = 1158
 		camera.limit_smoothed = true
+	else:
+		camera.limit_left = -100000
+		camera.limit_right = 100000
+		camera.limit_top = -100000
+		camera.limit_bottom = 100000
 
 func _on_in_combat_timeout() -> void:
 	in_combat = false
