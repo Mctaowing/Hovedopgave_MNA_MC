@@ -184,7 +184,8 @@ func spawn_chests_in_rooms():
 		
 		var chest_position
 		var tooClose
-		while tooClose != false:
+		var tries = 0
+		while tooClose != false or tries >= 10:
 			tooClose = false
 			chest_position = get_random_position_in_room(rooms[chest_room]) * CELL_SIZE
 			for _enemy in enemyArray:
@@ -193,13 +194,15 @@ func spawn_chests_in_rooms():
 			for _chest in chestArray:
 				if chest_position.distance_to(_chest.position) < 50:
 					tooClose = true
-					
-		var new_chest = chest_scene.instantiate()
-		new_chest.position = chest_position
-		new_chest.name = "chest_R" + str(chest_room) + "_N" + str(chest)
-		add_child(new_chest)
-		chestArray.append(new_chest)
-		print(new_chest.name, " ", new_chest.position)
+			tries += 1
+		
+		if tooClose == false:
+			var new_chest = chest_scene.instantiate()
+			new_chest.position = chest_position
+			new_chest.name = "chest_R" + str(chest_room) + "_N" + str(chest)
+			add_child(new_chest)
+			chestArray.append(new_chest)
+			print(new_chest.name, " ", new_chest.position)
 
 func get_random_position_in_room(room) -> Vector2:
 	var room_min_x = room.position.x +2
