@@ -22,6 +22,7 @@ func restart_game():
 		get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
 	else:
 		get_tree().reload_current_scene()
+	global.gold = 0
 
 func hide_screen():
 	visible = false

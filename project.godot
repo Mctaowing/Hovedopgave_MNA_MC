@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="Hovedopgave"
+config/name="Pixel Dungeon"
 run/main_scene="res://Scenes/Game/game.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://pixel_dungeon_icon.png"
+config/windows_native_icon="res://pixel_dungeon_icon_ico.ico"
 
 [autoload]
 
