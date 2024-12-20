@@ -485,15 +485,22 @@ one_shot = true
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 45.0
+offset_left = 50.0
 offset_top = -64.0
-offset_right = 88.0
+offset_right = 93.0
 offset_bottom = -4.0
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_7o4t2")
 
-[node name="gold_coin" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2(20, 627)
+[node name="gold_coin" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -43.0
+offset_right = 45.0
+offset_bottom = -3.0
+grow_vertical = 0
 texture = ExtResource("4_7itfg")
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
