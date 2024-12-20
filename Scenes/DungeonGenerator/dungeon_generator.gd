@@ -32,6 +32,7 @@ func _ready():
 	player.position = Vector2(rooms[0].position.x * CELL_SIZE + 48, rooms[0].position.y * CELL_SIZE + 64)
 	spawn_enemies_in_rooms()
 	spawn_chests_in_rooms()
+	print("Dungeon generated!")
 
 func initalize_grid():
 	for x in range(WIDTH):
@@ -153,14 +154,15 @@ func instantiate_enemy(scene, type:String, min_amount:int, max_amount:int, min_r
 	for room_number in range(min_room, max_room):
 		var room = rooms[room_number]
 		for enemy_number in randi_range(min_amount, max_amount):
+
 			var _position
 			var tooClose
 			var tries = 0
-			while tooClose != false or tries >= 10:
+			while tooClose != false or tries < 5:
 				tooClose = false
 				_position = get_random_position_in_room(room) * CELL_SIZE
 				for enemy in enemyArray:
-					if _position.distance_to(enemy.position) < 50:
+					if _position.distance_to(enemy.position) < 25:
 						tooClose = true
 				tries += 1
 			
@@ -184,22 +186,25 @@ func spawn_chests_in_rooms():
 		
 		var chest_position
 		var tooClose
-		while tooClose != false:
+		var tries = 0
+		while tooClose != false or tries < 5:
 			tooClose = false
 			chest_position = get_random_position_in_room(rooms[chest_room]) * CELL_SIZE
 			for _enemy in enemyArray:
-				if chest_position.distance_to(_enemy.position) < 50:
+				if chest_position.distance_to(_enemy.position) < 25:
 					tooClose = true
 			for _chest in chestArray:
-				if chest_position.distance_to(_chest.position) < 50:
+				if chest_position.distance_to(_chest.position) < 25:
 					tooClose = true
-					
-		var new_chest = chest_scene.instantiate()
-		new_chest.position = chest_position
-		new_chest.name = "chest_R" + str(chest_room) + "_N" + str(chest)
-		add_child(new_chest)
-		chestArray.append(new_chest)
-		print(new_chest.name, " ", new_chest.position)
+			tries += 1
+		
+		if tooClose == false:
+			var new_chest = chest_scene.instantiate()
+			new_chest.position = chest_position
+			new_chest.name = "chest_R" + str(chest_room) + "_N" + str(chest)
+			add_child(new_chest)
+			chestArray.append(new_chest)
+			print(new_chest.name, " ", new_chest.position)
 
 func get_random_position_in_room(room) -> Vector2:
 	var room_min_x = room.position.x +2
