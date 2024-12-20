@@ -85,14 +85,17 @@ func take_dmg(amount: int):
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
-		print(str(self.get_type()) + " died.")
-		alive = false
-		$CollisionShape2D.queue_free()
-		$attack_area.queue_free()
-		$tracking_area.queue_free()
-		health_bar.queue_free()
-		sprite.play("Death_" + direction)
-		$death.start()
+		death()
+
+func death():
+	print(str(self.get_type()) + " died.")
+	alive = false
+	$CollisionShape2D.queue_free()
+	$attack_area.queue_free()
+	$tracking_area.queue_free()
+	health_bar.queue_free()
+	sprite.play("Death_" + direction)
+	$death.start()
 
 func _on_death_timeout() -> void:
 	sprite.modulate.a -= 0.05

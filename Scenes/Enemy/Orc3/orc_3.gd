@@ -22,3 +22,15 @@ func update_attack_area():
 			attack_area_collision.transform = Transform2D(deg_to_rad(0), Vector2(1, 0.8), 0, Vector2(-17, 0))
 		else: #right
 			attack_area_collision.transform = Transform2D(deg_to_rad(0), Vector2(1, 0.8), 0, Vector2(15, 0))
+			
+func take_dmg(amount: int):
+	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
+	health -= amount
+	if health <= 0:
+		death()
+
+func _on_death_timeout() -> void:
+	sprite.modulate.a -= 0.05
+	if sprite.modulate.a <= 0:
+		return
+	$death.start()

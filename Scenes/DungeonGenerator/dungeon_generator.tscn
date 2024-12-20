@@ -707,3 +707,9 @@ script = ExtResource("1_wh2ns")
 tile_set = SubResource("TileSet_chx2t")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("4_d35k6")]
+
+[node name="boss_dead" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="boss_dead" to="." method="_on_boss_dead_timeout"]
