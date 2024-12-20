@@ -18,6 +18,7 @@ func restart_game():
 	get_tree().paused = false
 	hide_screen()
 	if global.current_scene == "dungeon_generator":
+		global.current_scene = "game"
 		get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
 	else:
 		get_tree().reload_current_scene()
