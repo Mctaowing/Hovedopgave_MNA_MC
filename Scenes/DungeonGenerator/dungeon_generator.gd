@@ -25,26 +25,13 @@ var enemyArray = []
 var chestArray = []
 
 func _ready():
-	if global.dungeon_number == 0:
-		print("dflkjnvodm")
-		randomize()
-		initalize_grid()
-		generate_dungeon()
-		draw_dungeon()
-		player.position = Vector2(rooms[0].position.x * CELL_SIZE + 48, rooms[0].position.y * CELL_SIZE + 64)
-		spawn_enemies_in_rooms()
-		spawn_chests_in_rooms()
-		global.dungeon_number += 1
-	else:
-		for enemy in enemyArray:
-			add_child(enemy)
-		for chest in chestArray:
-			add_child(chest)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	#is_boss_dead()
-	pass	
+	randomize()
+	initalize_grid()
+	generate_dungeon()
+	draw_dungeon()
+	player.position = Vector2(rooms[0].position.x * CELL_SIZE + 48, rooms[0].position.y * CELL_SIZE + 64)
+	spawn_enemies_in_rooms()
+	spawn_chests_in_rooms()
 
 func initalize_grid():
 	for x in range(WIDTH):
@@ -187,8 +174,8 @@ func instantiate_enemy(scene, type:String, min_amount:int, max_amount:int, min_r
 
 func spawn_enemies_in_rooms():
 	instantiate_enemy(orc3_scene, "orc3", 1, 1, rooms.size()-1, rooms.size())
-	#instantiate_enemy(orc2_scene, "orc2", 0, 2, 1, rooms.size())
-	#instantiate_enemy(orc1_scene, "orc1", 1, 3, 1, rooms.size())
+	instantiate_enemy(orc2_scene, "orc2", 0, 2, 1, rooms.size())
+	instantiate_enemy(orc1_scene, "orc1", 1, 3, 1, rooms.size())
 
 func spawn_chests_in_rooms():
 	var chest_amount = randi_range(2, 4)
@@ -224,27 +211,3 @@ func get_random_position_in_room(room) -> Vector2:
 	var rand_y = randi_range(room_min_y, room_max_y)
 
 	return Vector2(rand_x,rand_y)
-
-func is_boss_dead():
-	if enemyArray.front().alive == false:
-		if $boss_dead.is_stopped():
-			$boss_dead.start()
-			print("timer started")
-		return true
-	else:
-		return false
-
-func _on_boss_dead_timeout() -> void:
-	if global.current_scene == "dungeon_generator":
-		global.transition_scene = true
-		get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
-		global.finish_change_scenes()
-	
-	randomize()
-	initalize_grid()
-	generate_dungeon()
-	draw_dungeon()
-	player.position = Vector2(rooms[0].position.x * CELL_SIZE + 48, rooms[0].position.y * CELL_SIZE + 64)
-	spawn_enemies_in_rooms()
-	spawn_chests_in_rooms()
-	global.dungeon_number += 1

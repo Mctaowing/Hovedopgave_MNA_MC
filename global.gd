@@ -4,7 +4,6 @@ var gold = 0
 
 var transition_scene = false
 var current_scene = "game"
-var dungeon_number = 0
 
 func finish_change_scenes():
 	if transition_scene == true:
