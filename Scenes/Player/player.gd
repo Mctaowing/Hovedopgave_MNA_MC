@@ -34,7 +34,7 @@ func _ready() -> void:
 	damage = 20
 	speed = 200
 	gold = global.gold
-	gold_display.text = "Gold: " + str(gold)
+	gold_display.text = str(gold)
 	set_camera_limit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -134,7 +134,7 @@ func _on_attack_cooldown_timeout() -> void:
 func update_gold(amount: int):
 	global.gold += amount
 	gold = global.gold
-	gold_display.text = "Gold: " + str(gold)
+	gold_display.text = str(gold)
 	print(type + " got " + str(amount) + " gold")
 	
 func update_health_bar():

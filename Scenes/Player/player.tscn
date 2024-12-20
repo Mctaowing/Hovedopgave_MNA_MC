@@ -1,8 +1,9 @@
-[gd_scene load_steps=58 format=3 uid="uid://17awqu4fuiqo"]
+[gd_scene load_steps=60 format=3 uid="uid://17awqu4fuiqo"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_3xaeu"]
 [ext_resource type="Texture2D" uid="uid://mbdeqt2wb4m2" path="res://Assets/Mystic woods/player.png" id="1_u8yn6"]
 [ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="3_17yyk"]
+[ext_resource type="Texture2D" uid="uid://dxmy6klcoh0iy" path="res://Assets/Pixel Art Icon Pack/Misc/Golden Coin.png" id="4_7itfg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hoawo"]
 atlas = ExtResource("1_u8yn6")
@@ -422,6 +423,10 @@ height = 12.0
 radius = 7.0
 height = 24.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_7o4t2"]
+font = ExtResource("3_17yyk")
+font_size = 50
+
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_layer = 3
@@ -480,13 +485,16 @@ one_shot = true
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -38.0
-offset_right = 45.0
-offset_bottom = -7.0
+offset_left = 45.0
+offset_top = -64.0
+offset_right = 88.0
+offset_bottom = -4.0
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("3_17yyk")
-theme_override_font_sizes/font_size = 25
+label_settings = SubResource("LabelSettings_7o4t2")
+
+[node name="gold_coin" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(20, 627)
+texture = ExtResource("4_7itfg")
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]

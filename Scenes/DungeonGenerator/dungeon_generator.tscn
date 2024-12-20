@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4fwg8wehqatx"]
+[gd_scene load_steps=11 format=3 uid="uid://b4fwg8wehqatx"]
 
 [ext_resource type="Script" path="res://Scenes/DungeonGenerator/dungeon_generator.gd" id="1_wh2ns"]
 [ext_resource type="Texture2D" uid="uid://cvi6pcq5c6vo6" path="res://Assets/0x72_16x16DungeonTileset.v5/Edit.png" id="2_1ysb1"]
 [ext_resource type="Texture2D" uid="uid://vbgfpbegdhc1" path="res://Assets/Village top down/Edits/Border_Colours.png" id="3_bggwb"]
 [ext_resource type="PackedScene" uid="uid://17awqu4fuiqo" path="res://Scenes/Player/player.tscn" id="4_d35k6"]
+[ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="5_qrwe3"]
+[ext_resource type="Texture2D" uid="uid://bp5yjrp1uhghk" path="res://Assets/Pixel Art Icon Pack/Ore & Gem/Cut Sapphire.png" id="6_1rsvu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qdq6j"]
 texture = ExtResource("2_1ysb1")
@@ -699,6 +701,10 @@ terrain_set_0/terrain_1/color = Color(0.501961, 0.984314, 0.25098, 1)
 sources/0 = SubResource("TileSetAtlasSource_qdq6j")
 sources/1 = SubResource("TileSetAtlasSource_06iw5")
 
+[sub_resource type="LabelSettings" id="LabelSettings_4pgne"]
+font = ExtResource("5_qrwe3")
+font_size = 30
+
 [node name="DungeonGenerator" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_wh2ns")
@@ -707,3 +713,25 @@ script = ExtResource("1_wh2ns")
 tile_set = SubResource("TileSet_chx2t")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("4_d35k6")]
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="CharacterBody2D"]
+
+[node name="teleport" type="Label" parent="CharacterBody2D/CanvasLayer2"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -249.0
+offset_top = -44.0
+offset_right = -42.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "[T] for teleport"
+label_settings = SubResource("LabelSettings_4pgne")
+
+[node name="teleport_stone" type="Sprite2D" parent="CharacterBody2D/CanvasLayer2"]
+position = Vector2(1131, 627)
+texture = ExtResource("6_1rsvu")
+flip_h = true
