@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @onready var interaction_manager = InteractionManager
-@onready var gold_display = $Camera2D/Gold
+@onready var gold_display = $CanvasLayer/gold
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
 @onready var health_bar: ProgressBar = $ProgressBar
@@ -114,7 +114,7 @@ func _on_death_timeout() -> void:
 	sprite.modulate.a -= 0.05
 	#print(sprite.modulate.a)
 	if sprite.modulate.a <= 0:
-		self.queue_free()
+		GameOver.show_screen()
 	$death.start()
 
 func _on_attack_area_body_entered(body: Node2D) -> void:

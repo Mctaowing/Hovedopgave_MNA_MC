@@ -450,16 +450,6 @@ shape = SubResource("CapsuleShape2D_fcjs0")
 offset = Vector2(0, -16)
 zoom = Vector2(3, 3)
 
-[node name="Gold" type="Label" parent="Camera2D"]
-z_index = 20
-offset_left = -192.0
-offset_top = 69.0
-offset_right = -152.0
-offset_bottom = 92.0
-theme_override_fonts/font = ExtResource("3_17yyk")
-theme_override_font_sizes/font_size = 10
-vertical_alignment = 2
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.847059, 0, 1)
 offset_left = -6.0
@@ -483,6 +473,20 @@ autostart = true
 [node name="in_combat" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="gold" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -38.0
+offset_right = 45.0
+offset_bottom = -7.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_17yyk")
+theme_override_font_sizes/font_size = 25
 
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]

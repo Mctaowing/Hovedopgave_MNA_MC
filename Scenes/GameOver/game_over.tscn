@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxwpox2eok1lo"]
+
+[ext_resource type="FontFile" uid="uid://b31s0wakidf2x" path="res://Assets/Fonts/Poco.ttf" id="1_6s0ev"]
+[ext_resource type="Script" path="res://Scenes/GameOver/game_over.gd" id="1_dd02e"]
+
+[node name="game_over_screen" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_dd02e")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.5
+offset_top = -45.5
+offset_right = 172.5
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_6s0ev")
+theme_override_font_sizes/font_size = 75
+text = "GAME OVER"
+
+[node name="restart_button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = 66.0
+offset_right = 129.0
+offset_bottom = 123.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "RESTART"
+
+[connection signal="pressed" from="Control/restart_button" to="." method="restart_game"]
