@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
-@onready var health_bar: ProgressBar = $ProgressBar
+@onready var health_bar: ProgressBar = $health_bar
 
 var type: String
 var direction: String = "forward"
@@ -96,9 +96,9 @@ func take_dmg(amount: int):
 
 func _on_death_timeout() -> void:
 	sprite.modulate.a -= 0.05
-	#print(sprite.modulate.a)
 	if sprite.modulate.a <= 0:
 		self.queue_free()
+		return
 	$death.start()
 
 func _on_attack_area_body_entered(body: Node2D) -> void:

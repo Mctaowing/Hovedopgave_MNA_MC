@@ -39,11 +39,33 @@ func take_dmg(amount: int):
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
-		print(str(self.get_type()) + " died.")
-		alive = false
-		$CollisionShape2D.queue_free()
-		$attack_area.queue_free()
-		$tracking_area.queue_free()
-		health_bar.queue_free()
-		sprite.play("Death")
-		$death.start()
+		death()
+
+func death():
+	print(str(self.get_type()) + " died.")
+	alive = false
+	$CollisionShape2D.disabled = true
+	$attack_area/CollisionShape2D.disabled = true
+	$tracking_area/CollisionShape2D.disabled = true
+	$health_bar.visible = false
+	sprite.play("Death")
+	$death.start()
+	
+func _on_death_timeout() -> void:
+	sprite.modulate.a -= 0.05
+	if sprite.modulate.a <= 0:
+		$respawn.wait_time = randi_range(20, 80)
+		$respawn.start()
+		return
+	$death.start()
+
+func _on_respawn_timeout() -> void:
+	position = spawn_coords
+	health = max_health
+	sprite.modulate.a = 1
+	$CollisionShape2D.disabled = false
+	$attack_area/CollisionShape2D.disabled = false
+	$tracking_area/CollisionShape2D.disabled = false
+	$health_bar.visible = true
+	alive = true
+	print(type + " respawned")

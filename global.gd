@@ -1,6 +1,6 @@
 extends Node
 
-var player_current_attack = false
+var gold = 0
 
 var transition_scene = false
 var current_scene = "game"

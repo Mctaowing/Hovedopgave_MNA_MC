@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0g7yagh82ocj"]
+[gd_scene load_steps=5 format=3 uid="uid://d0g7yagh82ocj"]
 
 [ext_resource type="PackedScene" uid="uid://bkxwynltmwabf" path="res://Scenes/town/town.tscn" id="1_1g55h"]
 [ext_resource type="PackedScene" uid="uid://17awqu4fuiqo" path="res://Scenes/Player/player.tscn" id="2_57ogm"]
 [ext_resource type="PackedScene" uid="uid://c4urmgch5w82u" path="res://Scenes/Chest/chest.tscn" id="3_ufd2h"]
 [ext_resource type="PackedScene" uid="uid://g52yi7744jyk" path="res://Scenes/Enemy/Rat/rat.tscn" id="4_o4rl0"]
-[ext_resource type="PackedScene" uid="uid://baat2kvyqdc4w" path="res://Scenes/Enemy/Orc3/orc_3.tscn" id="5_bqi15"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -15,11 +14,29 @@ position = Vector2(-10, 0)
 [node name="Player" parent="." instance=ExtResource("2_57ogm")]
 position = Vector2(569, 1072)
 
-[node name="AnimatedSprite2D" parent="." instance=ExtResource("3_ufd2h")]
+[node name="Chest1" parent="." instance=ExtResource("3_ufd2h")]
 position = Vector2(390, 857)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("4_o4rl0")]
-position = Vector2(843, 962)
+[node name="Rat1" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(826, 965)
 
-[node name="Orc3" parent="." instance=ExtResource("5_bqi15")]
-position = Vector2(545, 385)
+[node name="Rat2" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(810, 1011)
+
+[node name="Rat3" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(1123, 1027)
+
+[node name="Rat4" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(1033, 950)
+
+[node name="Rat5" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(1074, 748)
+
+[node name="Rat6" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(1113, 799)
+
+[node name="Rat7" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(947, 772)
+
+[node name="Rat8" parent="." instance=ExtResource("4_o4rl0")]
+position = Vector2(901, 1030)
