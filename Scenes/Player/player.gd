@@ -112,7 +112,6 @@ func death():
 
 func _on_death_timeout() -> void:
 	sprite.modulate.a -= 0.05
-	#print(sprite.modulate.a)
 	if sprite.modulate.a <= 0:
 		GameOver.show_screen()
 	$death.start()
