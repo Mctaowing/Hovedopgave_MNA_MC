@@ -14,11 +14,12 @@ var max_health: int
 var health: int
 var damage: int
 var speed: int
+var gold: int
+var exp: int
 
 var alive = true
 var attack_in_progress = false
 var enemies_in_attack_range = []
-var gold = global.gold
 var in_combat = false
 
 func get_type():
@@ -26,7 +27,6 @@ func get_type():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	type = "Player"
 	direction = "forward"
 	max_health = 200
 	health = max_health
@@ -34,6 +34,7 @@ func _ready() -> void:
 	damage = 20
 	speed = 200
 	gold = global.gold
+	exp = global.exp
 	gold_display.text = str(gold)
 	set_camera_limit()
 
@@ -65,16 +66,6 @@ func update_direction():
 		direction = "forward"
 	update_attack_area()
 
-#func update_direction():
-	#if abs(velocity.x) > abs(velocity.y):
-		#direction = "sideway"
-		#sprite.flip_h = velocity.x < 0
-	#elif velocity.y < 0: 
-		#direction = "backward"
-	#elif velocity.y > 0:
-		#direction = "forward"
-	#update_attack_area()
-
 func update_animation():
 	if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:
 		sprite.play("Idle_" + direction)
@@ -104,11 +95,15 @@ func attack():
 				enemy.take_dmg(do_dmg())
 
 func do_dmg():
+	in_combat = true
+	$in_combat.start()
 	var min_dmg = damage * 0.9
 	var max_dmg = damage * 1.1
 	return randi_range(min_dmg, max_dmg)
 
 func take_dmg(amount: int):
+	in_combat = true
+	$in_combat.start()
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
@@ -149,6 +144,11 @@ func update_gold(amount: int):
 	gold = global.gold
 	gold_display.text = str(gold)
 	print(type + " got " + str(amount) + " gold")
+	
+func update_exp(amount: int):
+	global.exp += amount
+	exp = global.exp
+	print(type + " got " + str(amount) + " exp")
 	
 func update_health_bar():
 	health_bar.value = health
