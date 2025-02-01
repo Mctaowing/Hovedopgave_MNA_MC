@@ -243,6 +243,7 @@ height = 194.0
 
 [node name="rat" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
+motion_mode = 1
 script = ExtResource("1_y60t4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -53,14 +53,27 @@ func get_input():
 	velocity = input_direction * speed
 
 func update_direction():
-	if abs(velocity.x) > abs(velocity.y):
+	if Input.is_action_pressed("left"):
 		direction = "sideway"
-		sprite.flip_h = velocity.x < 0
-	elif velocity.y < 0: 
+		sprite.flip_h = true
+	elif Input.is_action_pressed("right"):
+		direction = "sideway"
+		sprite.flip_h = false
+	elif Input.is_action_pressed("up"): 
 		direction = "backward"
-	elif velocity.y > 0:
+	elif Input.is_action_pressed("down"):
 		direction = "forward"
 	update_attack_area()
+
+#func update_direction():
+	#if abs(velocity.x) > abs(velocity.y):
+		#direction = "sideway"
+		#sprite.flip_h = velocity.x < 0
+	#elif velocity.y < 0: 
+		#direction = "backward"
+	#elif velocity.y > 0:
+		#direction = "forward"
+	#update_attack_area()
 
 func update_animation():
 	if velocity.length() == 0 && !sprite.is_playing() && attack_in_progress == false:

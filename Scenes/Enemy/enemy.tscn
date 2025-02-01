@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/Enemy/enemy.gd" id="1_a8aow"]
 
 [node name="enemy" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_a8aow")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
