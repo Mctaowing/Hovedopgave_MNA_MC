@@ -15,6 +15,7 @@ func _ready() -> void:
 		animated_sprite_2d.play("Opened")
 	interaction_area.interact = Callable(self, "_on_interact")
 
+
 func _on_interact():
 	if is_open == false:
 		animated_sprite_2d.play("OpenAnimation")
