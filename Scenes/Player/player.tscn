@@ -504,6 +504,12 @@ offset_bottom = -3.0
 grow_vertical = 0
 texture = ExtResource("4_7itfg")
 
+[node name="Level" type="Label" parent="CanvasLayer"]
+offset_left = 562.0
+offset_top = 614.0
+offset_right = 602.0
+offset_bottom = 637.0
+
 [connection signal="body_entered" from="attack_area" to="." method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="attack_area" to="." method="_on_attack_area_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]

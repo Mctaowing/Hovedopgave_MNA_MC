@@ -9,7 +9,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	damage = 5
 	speed = 80
-	dropped_exp = 2
+	dropped_exp = 1
 	spawn_coords = position
 
 func update_direction():

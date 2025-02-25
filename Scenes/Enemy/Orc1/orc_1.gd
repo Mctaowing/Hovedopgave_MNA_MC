@@ -9,7 +9,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	speed = 100
 	damage = 20
-	dropped_exp = 50
+	dropped_exp = 5
 	spawn_coords = position
 
 # Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)

@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var attack_area_collision: CollisionShape2D = $attack_area/CollisionShape2D
 @onready var health_bar: ProgressBar = $ProgressBar
 @onready var camera: Camera2D = $Camera2D
+@onready var level_display = $CanvasLayer/Level
 
 var type: String = "Player"
 var direction: String
@@ -16,6 +17,10 @@ var damage: int
 var speed: int
 var gold: int
 var exp: int
+var level: int
+
+var base_max_health = 200
+var base_damage = 20
 
 var alive = true
 var attack_in_progress = false
@@ -28,14 +33,16 @@ func get_type():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	direction = "forward"
-	max_health = 200
+	max_health = base_max_health
 	health = max_health
 	health_bar.max_value = max_health
-	damage = 20
+	damage = base_damage
 	speed = 200
 	gold = global.gold
 	exp = global.exp
+	level = 1
 	gold_display.text = str(gold)
+	level_display.text = str(level)
 	set_camera_limit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -144,22 +151,35 @@ func update_gold(amount: int):
 	gold = global.gold
 	gold_display.text = str(gold)
 	print(type + " got " + str(amount) + " gold")
-	
+
 func update_exp(amount: int):
 	global.exp += amount
 	exp = global.exp
 	print(type + " got " + str(amount) + " exp")
+	update_level()
+
+func update_level():
+	if level != abs(exp / 50) + 1:
+		level = abs(exp / 50) + 1
+		level_display.text = str(level)
+		print("Player has leveled up!")
+		update_stats()
+
+func update_stats():
+	max_health = base_max_health + (level * 10)
+	damage = base_damage + (level * 2)
+	health_bar.max_value = max_health
 	
 func update_health_bar():
 	health_bar.value = health
 	if health > 0 && health < max_health:
 		health_bar.visible = true
 		if health_bar.value <= max_health * 0.25:
-			health_bar.modulate = Color("#e50000", 1)
+			health_bar.modulate = Color("#e50000", 1) # Red
 		elif health_bar.value <= max_health / 2:
-			health_bar.modulate = Color("#e5b900", 1)
+			health_bar.modulate = Color("#e5b900", 1) # Yellow
 		else:
-			health_bar.modulate = Color("#00d800", 1)
+			health_bar.modulate = Color("#00d800", 1) # Green
 	else:
 		health_bar.visible = false
 
