@@ -182,7 +182,7 @@ func spawn_enemies_in_rooms():
 func spawn_chests_in_rooms():
 	var chest_amount = randi_range(2, 4)
 	for chest in range(chest_amount):
-		var chest_room = randi_range(0, rooms.size()-1)
+		var chest_room = randi_range(1, rooms.size()-1)
 		
 		var chest_position
 		var tooClose

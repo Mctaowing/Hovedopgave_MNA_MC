@@ -7,8 +7,9 @@ func _ready() -> void:
 	max_health = 30
 	health = max_health
 	health_bar.max_value = max_health
-	damage = 10
+	damage = 5
 	speed = 80
+	dropped_exp = 2
 	spawn_coords = position
 
 func update_direction():
@@ -39,6 +40,7 @@ func take_dmg(amount: int):
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
+		player.update_exp(dropped_exp)
 		death()
 
 func death():

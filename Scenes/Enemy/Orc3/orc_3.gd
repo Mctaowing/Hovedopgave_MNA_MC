@@ -4,11 +4,12 @@ extends "res://Scenes/Enemy/enemy.gd"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	type = "Orc3"
-	max_health = 300
+	max_health = 200
 	health = max_health
 	health_bar.max_value = max_health
 	speed = 100
 	damage = 50
+	dropped_exp = 200
 	spawn_coords = position
 
 # Transform2D(rotation: deg_to_rad() float, scale: Vector2, skew: float, position: Vector2)
@@ -27,6 +28,7 @@ func take_dmg(amount: int):
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
+		player.update_exp(dropped_exp)
 		death()
 
 func _on_death_timeout() -> void:

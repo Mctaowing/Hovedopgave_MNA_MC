@@ -1,6 +1,7 @@
 extends Node
 
 var gold = 0
+var exp = 0
 
 var transition_scene = false
 var current_scene = "game"

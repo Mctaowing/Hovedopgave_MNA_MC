@@ -11,7 +11,7 @@ var max_health: int
 var health: int
 var damage: int
 var speed: int
-var dropped_exp
+var dropped_exp: int
 var spawn_coords: Vector2
 
 var alive = true
@@ -85,6 +85,7 @@ func take_dmg(amount: int):
 	print(str(self.get_type()) + " took " + str(amount) + " dmg.")
 	health -= amount
 	if health <= 0:
+		player.update_exp(dropped_exp)
 		death()
 
 func death():

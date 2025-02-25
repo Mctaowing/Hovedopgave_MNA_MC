@@ -430,6 +430,7 @@ font_size = 50
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 y_sort_enabled = true
 collision_layer = 3
+motion_mode = 1
 script = ExtResource("1_3xaeu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -472,11 +473,11 @@ wait_time = 0.2
 one_shot = true
 
 [node name="regen_timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 autostart = true
 
 [node name="in_combat" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

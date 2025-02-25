@@ -629,6 +629,7 @@ height = 194.013
 
 [node name="Orc3" type="CharacterBody2D" groups=["enemy"]]
 y_sort_enabled = true
+motion_mode = 1
 script = ExtResource("1_idfce")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
