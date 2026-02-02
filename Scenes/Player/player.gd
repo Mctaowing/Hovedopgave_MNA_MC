@@ -16,6 +16,7 @@ var damage: int
 var speed: int
 var gold: int
 var exp: int
+var player_level: int
 
 var alive = true
 var attack_in_progress = false

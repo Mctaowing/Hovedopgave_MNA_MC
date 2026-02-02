@@ -507,7 +507,7 @@ grow_vertical = 0
 texture = ExtResource("4_7itfg")
 metadata/_edit_use_anchors_ = true
 
-[node name="expBar" type="ProgressBar" parent="."]
+[node name="ExpBar" type="ProgressBar" parent="."]
 offset_right = 4.0
 offset_bottom = 27.0
 metadata/_edit_use_anchors_ = true
